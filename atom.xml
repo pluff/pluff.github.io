@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Pavel Shutsin's Blog]]></title>
-  <link href="http://pluff.github.io/atom.xml" rel="self"/>
-  <link href="http://pluff.github.io/"/>
-  <updated>2013-09-06T16:14:35+03:00</updated>
-  <id>http://pluff.github.io/</id>
+  <link href="http://shutsin.com/atom.xml" rel="self"/>
+  <link href="http://shutsin.com/"/>
+  <updated>2013-09-06T16:36:58+03:00</updated>
+  <id>http://shutsin.com/</id>
   <author>
     <name><![CDATA[Pavel Shutsin]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Say Hi to the world]]></title>
-    <link href="http://pluff.github.io/2013/09/06/say-hi-to-the-world/"/>
+    <link href="http://shutsin.com/2013/09/06/say-hi-to-the-world/"/>
     <updated>2013-09-06T16:07:00+03:00</updated>
-    <id>http://pluff.github.io/2013/09/06/say-hi-to-the-world</id>
+    <id>http://shutsin.com/2013/09/06/say-hi-to-the-world</id>
     <content type="html"><![CDATA[<p>Hello everyone! Here is my dummy blog post</p>
 
 <!-- more -->
