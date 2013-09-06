@@ -16,7 +16,7 @@
     <div class="recent">
         <h4>Recent Posts</h4>
         <ul>
-            {% for post in site.posts limit 5 %}
+            {% for post in site.posts limit site.recent_posts %}
             <li><a href="{{ root_url }}{{ post.url }}">{{post.title}}</a></li>
             {% endfor %}
         </ul>
