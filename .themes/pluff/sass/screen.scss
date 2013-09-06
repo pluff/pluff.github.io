@@ -1,0 +1,175 @@
+@import "compass";
+@include global-reset;
+// Defaults
+* {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  border: none;
+}
+
+@import "customized-bootstrap";
+@import "github-highlighting";
+
+@import "layout";
+
+a:hover {
+  text-decoration: none;
+}
+
+p {
+  margin: 0 0 5px 0;
+}
+
+code {
+  color: teal;
+}
+
+.hint {
+  color: #bbb;
+  font-size: 0.8em;
+}
+
+$articleBorder: darken($navbarBackground, 15%);
+$articleBorderHighlight: #004400;
+
+@mixin content-block {
+  @include border-radius($baseBorderRadius);
+  border: 1px solid $articleBorder;
+  @include box-shadow(2px 2px 1px lighten($articleBorder, 15%));
+  padding: 0 20px 20px 20px;
+}
+
+.content-block-separator {
+  line-height: 0;
+  height: 30px;
+}
+
+.article {
+  @include content-block;
+  .footer {
+    padding-top: 15px;
+    margin-bottom: -10px;
+  }
+}
+
+.article-comments {
+  @include content-block;
+  padding-top: 10px;
+
+  .comment {
+    padding: 10px 0;
+    border-bottom: 1px solid lighten($articleBorder, 10%);
+
+    img {
+      @include border-radius($baseBorderRadius);
+    }
+  }
+
+  .new-comment-form {
+    .textarea {
+      margin-right: 15px;
+      textarea {
+        width: 100%;
+      }
+    }
+    .actions {
+      margin-top: 10px;
+      a {
+        margin: 0 5px;
+      }
+      img {
+        @include border-radius($baseBorderRadius);
+      }
+    }
+
+    .tabs-below > .nav-tabs {
+      border: none;
+      & > li > a {
+        border: none;
+        padding-top: 10px;
+        padding-bottom: 10px;
+      }
+      li.active {
+        display: none;
+      }
+    }
+  }
+}
+
+.articles {
+
+  .article-item {
+    @include content-block;
+
+    &:hover, &:focus {
+      border: 1px solid lighten($articleBorderHighlight, 15%);
+      @include box-shadow(0px 0px 3px 3px lighten($articleBorderHighlight, 85%));
+    }
+  }
+}
+
+.archive {
+  @include content-block;
+}
+
+.info-block {
+  @include content-block;
+
+  .body {
+    text-align: justify;
+
+    img {
+      margin-bottom: $baseLineHeight;
+      @include border-radius($baseBorderRadius);
+    }
+  }
+
+  ul {
+    margin-left: 10px;
+  }
+}
+
+.simple-pager {
+  @include clearfix();
+
+  ul {
+    list-style: none;
+    margin: 5px 0;
+    @include clearfix();
+  }
+
+  li.previous {
+    float: left;
+  }
+  li.next {
+    float: right;
+  }
+}
+
+.sign-in-form {
+  text-align: center;
+  line-height: 60px;
+  i {
+    width: inherit;
+    height: inherit;
+  }
+}
+
+.user-markup {
+  h1, h2, h3, h4, h5, h6 {
+    line-height: $baseLineHeight;
+    font-size: 1.1em;
+  }
+  blockquote p {
+    font-size: $baseFontSize;
+  }
+  ul li {
+    list-style-type: disc;
+  }
+  ol li {
+    list-style-type: decimal;
+  }
+}
+
+

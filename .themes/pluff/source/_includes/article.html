@@ -1,0 +1,45 @@
+{% if index %}
+<div class="article-item">
+    <div class="header">
+        <div class="date pull-right"></div>
+        <h3><a href="{{root_url}}{{post.url}}">{{post.title}}</a></h3>
+
+        <div class="clearfix"></div>
+    </div>
+    <div class="body">
+        <div class="entry-content">{{ content | excerpt }}</div>
+        {% capture excerpted %}{{ content | has_excerpt }}{% endcapture %}
+        {% if excerpted == 'true' %}
+        <a rel="full-article" href="{{ root_url }}{{ post.url }}">{{ site.excerpt_link }}</a>
+        {% endif %}
+    </div>
+</div>
+{% else %}
+<div class="article">
+    <div class="header">
+        <div class="date pull-right">{{ post.date_formatted }}</div>
+        <h3>{{ post.title }}</h3>
+
+        <div class="clearfix"></div>
+    </div>
+    <div class="body">{{ content }}</div>
+    <div class="footer">
+        <div class="tags pull-left">
+            {% for tag in page.tags %}
+                <span class="label">
+                    <a href="#">{{ tag }}</a>
+                </span>
+            {% endfor %}
+        </div>
+        <div class="pull-right">
+            {% unless page.sharing == false %}
+            {% include post/sharing.html %}
+            {% endunless %}
+        </div>
+        <div class="clearfix"></div>
+
+    </div>
+
+</div>
+<div class="clearfix"></div>
+{% endif %}

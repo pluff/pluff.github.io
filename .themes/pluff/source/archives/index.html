@@ -1,0 +1,24 @@
+---
+layout: page
+title: Blog Archive
+footer: false
+---
+
+<div id="blog-archives">
+    {% for post in site.posts reverse %}
+    {% capture this_year %}{{ post.date | date: "%Y" }}{% endcapture %}
+    {% capture this_date %}{{ post.date | date: "%B%Y" }}{% endcapture %}
+    {% if this_year != year %}
+    <h4>{{ this_year }}</h4>
+    {% endif %}
+    {% if this_date != last_date %}
+    <div id="{{ this_date }}"></div>
+    {% endif %}
+
+    <div><span>{{ post.date | date: "%B %e, %Y" }}</span> <a
+            href="{{ site_url }}{{post.url}} ">{{ post.title }}</a></div>
+
+    {% assign year = this_year %}
+    {% assign last_date = this_date %}
+    {% endfor %}
+</div>

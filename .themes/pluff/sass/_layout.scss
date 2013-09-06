@@ -1,0 +1,37 @@
+$footerBackground: $navbarBackgroundHighlight;
+$footerBackgroundHighlight: $navbarBackground;
+
+$logoHeight: 32px;
+.top-bar {
+  .navbar-inner {
+    padding: 0 20px;
+  }
+
+  .logo {
+    float: left;
+    margin: (($navbarHeight - $logoHeight)/2) 20px (($navbarHeight - $logoHeight)/2) 0;
+
+    img {
+      @include border-radius($baseBorderRadius);
+    }
+  }
+
+  .brand {
+    &:hover, &:focus {
+      color: $linkColorHover;
+    }
+  }
+}
+
+.page-footer {
+  @include gradient-vertical($footerBackgroundHighlight, $footerBackground);
+  border: 1px solid $navbarBorder;
+  @include border-radius($baseBorderRadius);
+  @include box-shadow(0 1px 4px rgba(0, 0, 0, .065));
+
+  // Prevent floats from breaking the navbar
+  @include clearfix();
+
+  margin-top: $baseLineHeight;
+  padding: 5px;
+}

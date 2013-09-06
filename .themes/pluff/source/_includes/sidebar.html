@@ -1,0 +1,42 @@
+<div class="info-block">
+    <div class="about">
+        <div class="header">
+            <h4>About me</h4>
+        </div>
+        <div class="body">
+            <img src="{{ site.gravatar }}?size=128">
+            <div class="clearfix"></div>
+            <p>
+                My name is {{ site.author }} and I'm
+                <a href="http://www.ruby-lang.org/">Ruby</a>
+                addicted from Belarus. You can check out more info in my social accounts listed above.
+            </p>
+        </div>
+    </div>
+    <div class="recent">
+        <h4>Recent Posts</h4>
+        <ul>
+            {% for post in site.posts limit 5 %}
+            <li><a href="{{ root_url }}{{ post.url }}">{{post.title}}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="tags">
+        <h4>Tags Cloud</h4>
+        {% tag_cloud font-size: 10 - 20px %}
+    </div>
+    <div>
+        <h4>Archives</h4>
+        <ul>
+            {% for post in site.posts reverse %}
+                {% capture this_date %}{{ post.date | date: "%B %Y" }}{% endcapture %}
+                {% if last_date != this_date %}
+                    {% capture anchor_name %}{{ post.date | date: "%B%Y" }}{% endcapture %}
+                    <li><a href="/archives#{{anchor_name}}">{{this_date}}</a></li>
+                {% endif %}
+                {% assign last_date = this_date %}
+            {% endfor %}
+        </ul>
+
+    </div>
+</div>

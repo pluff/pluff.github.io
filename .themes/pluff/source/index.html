@@ -1,0 +1,16 @@
+---
+layout: default
+---
+
+<div class="articles">
+  {% include paging.html %}
+  {% assign index = true %}
+  {% for post in paginator.posts %}
+  {% assign content = post.content %}
+      {% include article.html %}
+      {% unless forloop.last %}
+        <div class="content-block-separator"></div>
+      {% endunless %}
+  {% endfor %}
+  {% include paging.html %}
+</div>

@@ -1,0 +1,51 @@
+$baseBorderRadius: 2px;
+$linkColor: #116611;
+$linkColorHover: lighten($linkColor, 8%);
+$navbarHeight: 44px;
+$navbarLinkColor: $linkColor;
+$navbarLinkColorHover: $linkColorHover;
+$navbarBackground: #fafafa;
+$navbarBackgroundHighlight: $navbarBackground;
+$btnPrimaryBackground: $linkColor;
+$btnPrimaryBackgroundHighlight: $btnPrimaryBackground;
+$infoBackground: #c9dfc5;
+
+@import "bootstrap/bootstrap";
+
+body {
+  padding-top: $navbarHeight+$baseLineHeight;
+}
+
+@import "bootstrap/responsive";
+
+.label, .badge {
+  color: $textColor;
+  text-shadow: none;
+  background-color: $infoBackground;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  background-image: none;
+}
+
+h2 {
+  font-size: $baseFontSize * 2;
+}
+
+ul.nav {
+  margin: 0px;
+}
+
+form {
+  margin: 0px;
+}
+
+.tooltip-inner {
+  color: $textColor;
+  text-shadow: none;
+  background-color: $infoBackground;
+}
+
+.tooltip.top .tooltip-arrow {
+  border-top-color: $infoBackground;
+}
