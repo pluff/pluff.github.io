@@ -1,7 +1,7 @@
 {% if index %}
 <div class="article-item">
     <div class="header">
-        <div class="date pull-right"></div>
+        <div class="date pull-right">{{ post.date_formatted }}</div>
         <h3><a href="{{root_url}}{{post.url}}">{{post.title}}</a></h3>
 
         <div class="clearfix"></div>
@@ -17,8 +17,8 @@
 {% else %}
 <div class="article">
     <div class="header">
-        <div class="date pull-right">{{ post.date_formatted }}</div>
-        <h3>{{ post.title }}</h3>
+        <div class="date pull-right">{{ page.date_formatted }}</div>
+        <h3>{{ page.title }}</h3>
 
         <div class="clearfix"></div>
     </div>
