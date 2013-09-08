@@ -2,15 +2,15 @@
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
         <loc>http://shutsin.com/2013/09/08/another-git-branching-model/</loc>
-        <lastmod>2013-09-08T21:19:33+03:00</lastmod>
+        <lastmod>2013-09-08T22:38:02+03:00</lastmod>
     </url>
     <url>
         <loc>http://shutsin.com/archives/</loc>
-        <lastmod>2013-09-08T21:19:33+03:00</lastmod>
+        <lastmod>2013-09-08T22:38:02+03:00</lastmod>
     </url>
     <url>
         <loc>http://shutsin.com/</loc>
-        <lastmod>2013-09-08T21:19:33+03:00</lastmod>
+        <lastmod>2013-09-08T22:38:02+03:00</lastmod>
     </url>
     <url>
         <loc>http://shutsin.com/robots.txt</loc>
@@ -18,6 +18,6 @@
     </url>
     <url>
         <loc>http://shutsin.com/tags/</loc>
-        <lastmod>2013-09-08T21:19:33+03:00</lastmod>
+        <lastmod>2013-09-08T22:38:02+03:00</lastmod>
     </url>
 </urlset>
