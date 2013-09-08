@@ -74,4 +74,10 @@ Here are all steps summarized.
 6. Product owner can deploy master to production at any given time.
 
 
+#### Workflow enchancements
+
+* Its helpful to have automated mails via github hooks for PRs with unresolved conflicts. That will help development team to react faster.
+* Deployment script that will deploy feature-branch + latest master will be helpful for QA team.
+* Github + CI bots help to track CI build status on each feature branch.
+
 
