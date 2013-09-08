@@ -157,19 +157,36 @@ $articleBorderHighlight: #004400;
 }
 
 .user-markup {
+
   h1, h2, h3, h4, h5, h6 {
     line-height: $baseLineHeight;
-    font-size: 1.1em;
+    color: lighten($textColor, 15%);
+    margin: 20px 0;
   }
+
   blockquote p {
     font-size: $baseFontSize;
   }
+  ul, ol {
+    margin-left: 35px;
+    li {
+      margin: 4px 0;
+    }
+  }
+
   ul li {
     list-style-type: disc;
   }
+
   ol li {
     list-style-type: decimal;
   }
+
+  p {
+    margin: 0 0 $baseLineHeight / 10;
+  }
 }
+
+
 
 

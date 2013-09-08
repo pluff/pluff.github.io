@@ -6,7 +6,7 @@
 
         <div class="clearfix"></div>
     </div>
-    <div class="body">
+    <div class="body user-markup">
         <div class="entry-content">{{ content | excerpt }}</div>
         {% capture excerpted %}{{ content | has_excerpt }}{% endcapture %}
         {% if excerpted == 'true' %}
@@ -22,12 +22,12 @@
 
         <div class="clearfix"></div>
     </div>
-    <div class="body">{{ content }}</div>
+    <div class="body user-markup">{{ content }}</div>
     <div class="footer">
         <div class="tags pull-left">
             {% for tag in page.tags %}
                 <span class="label">
-                    <a href="#">{{ tag }}</a>
+                    <a href="{{root_url}}/tags/#{{tag}}">{{ tag }}</a>
                 </span>
             {% endfor %}
         </div>
