@@ -3,37 +3,9 @@ layout: default
 single: true
 ---
 <div>
-    <div>
-        <p class="meta">
-            {% if page.previous.url %}
-            <a class="pull-left" href="{{page.previous.url}}"
-               title="Previous Post: {{page.previous.title}}"><i class="icon-arrow-left"></i>
-                {{page.previous.title}}</a>
-            {% endif %}
-            {% if page.next.url %}
-            <a class="pull-right" href="{{page.next.url}}"
-               title="Next Post: {{page.next.title}}">{{page.next.title}} <i class="icon-arrow-right"></i></a>
-            {% endif %}
-            <div class="clearfix"></div>
-        </p>
-    </div>
-
+    {% include post_navigation.html %}
     {% include article.html %}
-    <div>
-        <p class="meta">
-            {% if page.previous.url %}
-            <a class="pull-left" href="{{page.previous.url}}"
-               title="Previous Post: {{page.previous.title}}"><i class="icon-arrow-left"></i>
-                {{page.previous.title}}</a>
-            {% endif %}
-            {% if page.next.url %}
-            <a class="pull-right" href="{{page.next.url}}"
-               title="Next Post: {{page.next.title}}">{{page.next.title}} <i class="icon-arrow-right"></i></a>
-            {% endif %}
-        </p>
-        <div class="clearfix"></div>
-    </div>
-
+    {% include post_navigation.html %}
     <div class="content-block-separator"></div>
     {% if site.disqus_short_name and page.comments == true %}
     <div class="article-comments">
