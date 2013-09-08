@@ -4,7 +4,7 @@
   <title><![CDATA[Pavel Shutsin's Blog]]></title>
   <link href="http://shutsin.com/atom.xml" rel="self"/>
   <link href="http://shutsin.com/"/>
-  <updated>2013-09-06T17:27:08+03:00</updated>
+  <updated>2013-09-08T21:21:33+03:00</updated>
   <id>http://shutsin.com/</id>
   <author>
     <name><![CDATA[Pavel Shutsin]]></name>
@@ -14,20 +14,94 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Say Hi to the world]]></title>
-    <link href="http://shutsin.com/2013/09/06/say-hi-to-the-world/"/>
-    <updated>2013-09-06T16:07:00+03:00</updated>
-    <id>http://shutsin.com/2013/09/06/say-hi-to-the-world</id>
-    <content type="html"><![CDATA[<p>Hello everyone! Here is my dummy blog post</p>
+    <title type="html"><![CDATA[Another git branching model]]></title>
+    <link href="http://shutsin.com/2013/09/08/another-git-branching-model/"/>
+    <updated>2013-09-08T18:42:00+03:00</updated>
+    <id>http://shutsin.com/2013/09/08/another-git-branching-model</id>
+    <content type="html"><![CDATA[<p>Today I&rsquo;ll describe git branching model we use on our project.</p>
+
+<h4>Prehistory</h4>
+
+<p>We had tried <a href="http://nvie.com/posts/a-successful-git-branching-model/">git-flow</a>, but it appeared to be too complicated for our small team.
+So after thinking a while we decided to build up our own workflow, that will perfectly match our <a href="http://en.wikipedia.org/wiki/Continuous_delivery">continuous delivery</a> needs.
+As our basis we took <a href="http://scottchacon.com/2011/08/31/github-flow.html">github flow</a> which is extremely simple and effective.</p>
 
 <!-- more -->
 
 
-<p>So:</p>
+<h4>Before we start</h4>
 
-<pre><code># helloworld.rb
-puts "Hello, World!"
-</code></pre>
+<p>This workflow focused on rapid deployment of any feature as soon as its ready. So if you have slow and complex QA processes this workflow may not work well for you.</p>
+
+<p><strong>For those who don’t want to read long text</strong> there is TL;DR paragraph at the end.</p>
+
+<h4>Adjustments to github-flow</h4>
+
+<p>Github workflow rules look like this:</p>
+
+<ol>
+<li>Anything in the <code>master</code> branch is deployable</li>
+<li>To work on something new, create a descriptively named branch off of <code>master</code> (ie: <code>new-oauth2-scopes</code>)</li>
+<li>Commit to that branch locally and regularly push your work to the same named branch on the server</li>
+<li>When you need feedback or help, or you think the branch is ready for merging, open a <a href="https://help.github.com/articles/using-pull-requests">pull request</a></li>
+<li>After someone else has reviewed and signed off on the feature, you can merge it into master</li>
+<li>Once it is merged and pushed to <code>master</code>, you can and should deploy immediately</li>
+</ol>
+
+
+<p>Lets go through each rule.</p>
+
+<ol>
+<li>Perfect rule! <code>master</code> branch should always be stable enough to be deployed to production.</li>
+<li>We felt small lack of connection between issue and branch name, so we took slight change on naming conventions, so our branches named corresponding to tracker issues (ie: <code>12345</code>). Lets call those branches as &ldquo;feature branches&rdquo;</li>
+<li>No changes here. every feature branch is a workplace. Code can be unstable or incomplete here.</li>
+<li>We open pull requests only when feature developer thinks he&rsquo;s done with it. Most of code discussions usually done via IM or verbally,
+so at the time developer creates a PR it should be 90% done. After PR got created, CI server runs tests on feature branch
+other developers review and comment on the code, QA team verifies the ticket.
+Developers are responsible to keep feature branch up-to-date with master to minimize possibility of conflicts.</li>
+<li>After all conditions of point 4 are met product owner/delivery manager/whoever_responsible_for_delivery can merge the branch into master.
+Its highly recommended to do it as soon as possible, so master didn&rsquo;t diverged from feature branch too much.
+In 99% product owner will be happy to merge and deploy feature as soon as its ready, so he&rsquo;ll merge the branch without delay.
+Development team shouldn&rsquo;t merge feature branches since we want product owner to have an ability to deploy only those features that he wants to be deployed.
+If you have slow QA team your feature branches could diverge from master too much while QA team does their testing. This fact can lead to issues after merge to master.</li>
+<li>Immediate deploy can be something business side of project would not appreciate, so we kept the right to deploy to product owner.
+Once it merged development team should think of it as &ldquo;deployed&rdquo;. Real deploy can happen whenever product owner decides to do that.</li>
+</ol>
+
+
+<h4>Handling large feature packs</h4>
+
+<p>Besides small independent features there can be large packs of features that doesn&rsquo;t make much sense without each other. We call them &ldquo;epics&rdquo;.</p>
+
+<p>Lets say our project has redesign planned in 15 tickets. For some reason business side of the product wants to deploy
+all these features in one go, so we can&rsquo;t deploy them independently as soon as each of them ready.
+First person who starts to work with ticket related to &ldquo;epic&rdquo; change starts new epic branch (ie: <code>epic/app_redesign</code>).
+This &ldquo;epic&rdquo; branch should be treated like temporary master for all features related to app redesign.
+Still, you need to base all your branches on current <code>master</code>, but your pull requests should point to &ldquo;epic&rdquo; branch.
+After all tickets in &ldquo;epic&rdquo; are done we can create PR to master branch and do final review\CI\QA cycle and merge it.</p>
+
+<h4>For those who don&rsquo;t want to read long text above</h4>
+
+<p>Here are all steps summarized.</p>
+
+<ol>
+<li><code>master</code> branch should be always deployable to production.</li>
+<li>To work on something new, create a branch off of <code>master</code> using feature ticket number (ie: <code>feature/12345</code>)</li>
+<li>Commit to that branch locally and regularly push your work to the same named branch on the server</li>
+<li>Whenever you think you finished the feature &ndash; create a PR to <code>master</code> or to &ldquo;epic&rdquo; branch in case of &ldquo;epic&rdquo; related feature. (see &ldquo;Handling large feature packs&rdquo;)</li>
+<li>After someone else has reviewed the code and QA team signed off on the feature, product owner can merge it into <code>master</code></li>
+<li>Product owner can deploy master to production at any given time.</li>
+</ol>
+
+
+<h4>Workflow enchancements</h4>
+
+<ul>
+<li>Its helpful to have automated mails via github hooks for PRs with unresolved conflicts. That will help development team to react faster.</li>
+<li>Deployment script that will deploy feature-branch + latest master will be helpful for QA team.</li>
+<li>Github + CI bots help to track CI build status on each feature branch.</li>
+</ul>
+
 ]]></content>
   </entry>
   

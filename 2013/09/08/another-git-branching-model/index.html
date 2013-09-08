@@ -1,0 +1,339 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Another git branching model - Pavel Shutsin's Blog</title>
+  <meta name="author" content="Pavel Shutsin">
+
+  
+  <meta name="description" content="This git branching model is used on my current project and is heavily based on github workflow">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link href="//netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css" rel="stylesheet" type="text/css" media="all">
+  <link rel="canonical" href="http://shutsin.com/2013/09/08/another-git-branching-model">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Pavel Shutsin's Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-41905992-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body >
+  <nav role="navigation"><div class="navbar navbar-fixed-top top-bar">
+    <div class="navbar-inner">
+        <div class="logo">
+            <img src="http://www.gravatar.com/avatar/b7a9682d4568c1313664f46432459f0c.png?size=32" />
+        </div>
+        <a class="brand" href="http://shutsin.com">Pavel Shutsin</a>
+        <ul class="nav">
+            <li>
+                <a href="https://github.com/pluff" target="_blank">
+                    <i class="icon-2x icon-github"></i>
+                </a>
+            </li>
+            <li>
+                <a href="http://www.facebook.com/pavel.shutin" target="_blank">
+                    <i class="icon-2x icon-facebook"></i>
+                </a>
+            </li>
+            <li>
+                <a href="http://www.linkedin.com/pub/" target="_blank">
+                    <i class="icon-2x icon-linkedin"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+</nav>
+  <div class="container">
+    <div class="row-fluid">
+        <div class="span9"><div>
+    
+
+    
+<div class="article">
+    <div class="header">
+        <div class="date pull-right">Sep 8<span>th</span>, 2013</div>
+        <h3>Another git branching model</h3>
+
+        <div class="clearfix"></div>
+    </div>
+    <div class="body user-markup"><p>Today I&rsquo;ll describe git branching model we use on our project.</p>
+
+<h4>Prehistory</h4>
+
+<p>We had tried <a href="http://nvie.com/posts/a-successful-git-branching-model/">git-flow</a>, but it appeared to be too complicated for our small team.
+So after thinking a while we decided to build up our own workflow, that will perfectly match our <a href="http://en.wikipedia.org/wiki/Continuous_delivery">continuous delivery</a> needs.
+As our basis we took <a href="http://scottchacon.com/2011/08/31/github-flow.html">github flow</a> which is extremely simple and effective.</p>
+
+<!-- more -->
+
+
+<h4>Before we start</h4>
+
+<p>This workflow focused on rapid deployment of any feature as soon as its ready. So if you have slow and complex QA processes this workflow may not work well for you.</p>
+
+<p><strong>For those who don’t want to read long text</strong> there is TL;DR paragraph at the end.</p>
+
+<h4>Adjustments to github-flow</h4>
+
+<p>Github workflow rules look like this:</p>
+
+<ol>
+<li>Anything in the <code>master</code> branch is deployable</li>
+<li>To work on something new, create a descriptively named branch off of <code>master</code> (ie: <code>new-oauth2-scopes</code>)</li>
+<li>Commit to that branch locally and regularly push your work to the same named branch on the server</li>
+<li>When you need feedback or help, or you think the branch is ready for merging, open a <a href="https://help.github.com/articles/using-pull-requests">pull request</a></li>
+<li>After someone else has reviewed and signed off on the feature, you can merge it into master</li>
+<li>Once it is merged and pushed to <code>master</code>, you can and should deploy immediately</li>
+</ol>
+
+
+<p>Lets go through each rule.</p>
+
+<ol>
+<li>Perfect rule! <code>master</code> branch should always be stable enough to be deployed to production.</li>
+<li>We felt small lack of connection between issue and branch name, so we took slight change on naming conventions, so our branches named corresponding to tracker issues (ie: <code>12345</code>). Lets call those branches as &ldquo;feature branches&rdquo;</li>
+<li>No changes here. every feature branch is a workplace. Code can be unstable or incomplete here.</li>
+<li>We open pull requests only when feature developer thinks he&rsquo;s done with it. Most of code discussions usually done via IM or verbally,
+so at the time developer creates a PR it should be 90% done. After PR got created, CI server runs tests on feature branch
+other developers review and comment on the code, QA team verifies the ticket.
+Developers are responsible to keep feature branch up-to-date with master to minimize possibility of conflicts.</li>
+<li>After all conditions of point 4 are met product owner/delivery manager/whoever_responsible_for_delivery can merge the branch into master.
+Its highly recommended to do it as soon as possible, so master didn&rsquo;t diverged from feature branch too much.
+In 99% product owner will be happy to merge and deploy feature as soon as its ready, so he&rsquo;ll merge the branch without delay.
+Development team shouldn&rsquo;t merge feature branches since we want product owner to have an ability to deploy only those features that he wants to be deployed.
+If you have slow QA team your feature branches could diverge from master too much while QA team does their testing. This fact can lead to issues after merge to master.</li>
+<li>Immediate deploy can be something business side of project would not appreciate, so we kept the right to deploy to product owner.
+Once it merged development team should think of it as &ldquo;deployed&rdquo;. Real deploy can happen whenever product owner decides to do that.</li>
+</ol>
+
+
+<h4>Handling large feature packs</h4>
+
+<p>Besides small independent features there can be large packs of features that doesn&rsquo;t make much sense without each other. We call them &ldquo;epics&rdquo;.</p>
+
+<p>Lets say our project has redesign planned in 15 tickets. For some reason business side of the product wants to deploy
+all these features in one go, so we can&rsquo;t deploy them independently as soon as each of them ready.
+First person who starts to work with ticket related to &ldquo;epic&rdquo; change starts new epic branch (ie: <code>epic/app_redesign</code>).
+This &ldquo;epic&rdquo; branch should be treated like temporary master for all features related to app redesign.
+Still, you need to base all your branches on current <code>master</code>, but your pull requests should point to &ldquo;epic&rdquo; branch.
+After all tickets in &ldquo;epic&rdquo; are done we can create PR to master branch and do final review\CI\QA cycle and merge it.</p>
+
+<h4>For those who don&rsquo;t want to read long text above</h4>
+
+<p>Here are all steps summarized.</p>
+
+<ol>
+<li><code>master</code> branch should be always deployable to production.</li>
+<li>To work on something new, create a branch off of <code>master</code> using feature ticket number (ie: <code>feature/12345</code>)</li>
+<li>Commit to that branch locally and regularly push your work to the same named branch on the server</li>
+<li>Whenever you think you finished the feature &ndash; create a PR to <code>master</code> or to &ldquo;epic&rdquo; branch in case of &ldquo;epic&rdquo; related feature. (see &ldquo;Handling large feature packs&rdquo;)</li>
+<li>After someone else has reviewed the code and QA team signed off on the feature, product owner can merge it into <code>master</code></li>
+<li>Product owner can deploy master to production at any given time.</li>
+</ol>
+
+
+<h4>Workflow enchancements</h4>
+
+<ul>
+<li>Its helpful to have automated mails via github hooks for PRs with unresolved conflicts. That will help development team to react faster.</li>
+<li>Deployment script that will deploy feature-branch + latest master will be helpful for QA team.</li>
+<li>Github + CI bots help to track CI build status on each feature branch.</li>
+</ul>
+
+</div>
+    <div class="footer">
+        <!--<div class="tags pull-left">-->
+            <!---->
+                <!--<span class="label">-->
+                    <!--<a href="/tags/#git">git</a>-->
+                <!--</span>-->
+            <!---->
+                <!--<span class="label">-->
+                    <!--<a href="/tags/#github">github</a>-->
+                <!--</span>-->
+            <!---->
+                <!--<span class="label">-->
+                    <!--<a href="/tags/#development workflow">development workflow</a>-->
+                <!--</span>-->
+            <!---->
+        <!--</div>-->
+        <div class="pull-right">
+            
+            <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://shutsin.com/2013/09/08/another-git-branching-model/" data-via="" data-counturl="http://shutsin.com/2013/09/08/another-git-branching-model/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="false" data-layout="button-count" data-width="300" data-show-faces="false"></div>
+  
+</div>
+
+            
+        </div>
+        <div class="clearfix"></div>
+
+    </div>
+
+</div>
+<div class="clearfix"></div>
+
+
+    
+
+    <div class="content-block-separator"></div>
+    
+    <div class="article-comments">
+        <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+        </div>
+    </div>
+    
+</div>
+</div>
+        <div class="span3"><div class="info-block">
+    <div class="about">
+        <div class="header">
+            <h4>About me</h4>
+        </div>
+        <div class="body">
+            <img src="http://www.gravatar.com/avatar/b7a9682d4568c1313664f46432459f0c.png?size=128">
+            <div class="clearfix"></div>
+            <p>
+                My name is Pavel Shutsin and I'm
+                <a href="http://www.ruby-lang.org/">Ruby</a>
+                addicted from Belarus. You can check out more info in my social accounts listed above.
+            </p>
+        </div>
+    </div>
+    <div class="recent">
+        <h4>Recent Posts</h4>
+        <ul>
+            
+            <li><a href="/2013/09/08/another-git-branching-model/">Another git branching model</a></li>
+            
+        </ul>
+    </div>
+    <div class="tags">
+        <h4>Tags Cloud</h4>
+        <a style='font-size: 19px' href='/tags/#development workflow'>development workflow</a>
+<a style='font-size: 13px' href='/tags/#git'>git</a>
+<a style='font-size: 20px' href='/tags/#github'>github</a>
+
+    </div>
+    <div>
+        <h4>Archives</h4>
+        <ul>
+            
+                
+                
+                    
+                    <li><a href="/archives#September2013">September 2013</a></li>
+                
+                
+            
+        </ul>
+
+    </div>
+</div>
+</div>
+    </div>
+  </div>
+  <footer role="contentinfo"><div class="page-footer">
+    <div class="text-center">
+        <small>&copy; 2013 Pavel Shutsin</small>
+    </div>
+</div>
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'pluff';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://shutsin.com/2013/09/08/another-git-branching-model/';
+        var disqus_url = 'http://shutsin.com/2013/09/08/another-git-branching-model/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/ren_US/all.js#xfbml=1&appId=161212827408577";
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
