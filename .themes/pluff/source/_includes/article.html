@@ -24,13 +24,13 @@
     </div>
     <div class="body user-markup">{{ content }}</div>
     <div class="footer">
-        <div class="tags pull-left">
-            {% for tag in page.tags %}
-                <span class="label">
-                    <a href="{{root_url}}/tags/#{{tag}}">{{ tag }}</a>
-                </span>
-            {% endfor %}
-        </div>
+        <!--<div class="tags pull-left">-->
+            <!--{% for tag in page.tags %}-->
+                <!--<span class="label">-->
+                    <!--<a href="{{root_url}}/tags/#{{tag}}">{{ tag }}</a>-->
+                <!--</span>-->
+            <!--{% endfor %}-->
+        <!--</div>-->
         <div class="pull-right">
             {% unless page.sharing == false %}
             {% include post/sharing.html %}
