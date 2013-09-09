@@ -4,7 +4,7 @@
   <title><![CDATA[Pavel Shutsin's Blog]]></title>
   <link href="http://shutsin.com/atom.xml" rel="self"/>
   <link href="http://shutsin.com/"/>
-  <updated>2013-09-08T22:39:07+03:00</updated>
+  <updated>2013-09-09T18:45:56+03:00</updated>
   <id>http://shutsin.com/</id>
   <author>
     <name><![CDATA[Pavel Shutsin]]></name>
@@ -33,7 +33,7 @@ As a basis we took <a href="http://scottchacon.com/2011/08/31/github-flow.html">
 
 <p>This workflow is focused on rapid deployment of any feature as soon as it&rsquo;s ready. Hence, If you have slow and complex QA process this workflow may not work well for you.</p>
 
-<p><strong>For those who don’t want to read long text</strong> there is TL;DR paragraph at the end.</p>
+<p><strong>For those who don’t want to read long text</strong> there is a TL;DR paragraph at the end.</p>
 
 <h4>Adjustments to github-flow</h4>
 
@@ -57,8 +57,9 @@ As a basis we took <a href="http://scottchacon.com/2011/08/31/github-flow.html">
 of naming convention. We name branches according to tracker issue numbers (ie: <code>12345</code>).
 Lets call these branches &ldquo;feature branches&rdquo;</li>
 <li>No changes here. Every feature branch is a workplace. Code can be unstable or incomplete here.</li>
-<li>We open pull request only when feature developer thinks he&rsquo;s done with the feature. Most of
-code discussions are done via IM or verbally. After PR have been created CI server runs tests on a feature branch,
+<li>We open pull request only when feature developer thinks he&rsquo;s done with the feature. Don&rsquo;t be
+afraid and write descriptive PR titles. Most of code discussions are done via IM or verbally.
+After PR have been created CI server runs tests on a feature branch,
 other developers review and comment the code, QA team verifies the ticket.
 Developers are responsible to keep feature branch up-to-date with <code>master</code> to minimize
 possibility of conflicts.</li>
