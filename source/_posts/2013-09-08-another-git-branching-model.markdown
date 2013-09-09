@@ -21,7 +21,7 @@ As a basis we took [github flow](http://scottchacon.com/2011/08/31/github-flow.h
 
 This workflow is focused on rapid deployment of any feature as soon as it's ready. Hence, If you have slow and complex QA process this workflow may not work well for you.
 
-__For those who don’t want to read long text__ there is TL;DR paragraph at the end.
+__For those who don’t want to read long text__ there is a TL;DR paragraph at the end.
 
 #### Adjustments to github-flow
 
@@ -41,8 +41,9 @@ Lets go through each rule.
 of naming convention. We name branches according to tracker issue numbers (ie: ```12345```).
 Lets call these branches "feature branches"
 3. No changes here. Every feature branch is a workplace. Code can be unstable or incomplete here.
-4. We open pull request only when feature developer thinks he's done with the feature. Most of
-code discussions are done via IM or verbally. After PR have been created CI server runs tests on a feature branch,
+4. We open pull request only when feature developer thinks he's done with the feature. Don't be
+afraid and write descriptive PR titles. Most of code discussions are done via IM or verbally.
+After PR have been created CI server runs tests on a feature branch,
 other developers review and comment the code, QA team verifies the ticket.
 Developers are responsible to keep feature branch up-to-date with ```master``` to minimize
 possibility of conflicts.
