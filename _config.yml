@@ -63,7 +63,7 @@ default_asides: [asides/recent_posts.html, asides/github.html, asides/delicious.
 # ----------------------- #
 
 facebook_user: pavel.shutin
-linkedin_user: pavel-shutin/56/440/168/
+linkedin_user: shutsin
 gravatar: http://www.gravatar.com/avatar/b7a9682d4568c1313664f46432459f0c.png
 
 # Github repositories
