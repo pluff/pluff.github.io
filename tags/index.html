@@ -1,5 +1,4 @@
 
-
 <!DOCTYPE html>
 <!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
 <!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
@@ -20,14 +19,13 @@
 
   
   <link href="//netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css" rel="stylesheet" type="text/css" media="all">
-  <link rel="canonical" href="http://shutsin.com/tags">
+  <link rel="index" href="http://shutsin.com" title="Pavel Shutsin's Blog">
+  <link rel="canonical"href="http://shutsin.com/tags">
   <link href="/favicon.ico" rel="icon" type="image/png">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Pavel Shutsin's Blog" type="application/atom+xml">
-  <script src="/javascripts/modernizr-2.0.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
-  <script src="/javascripts/octopress.js" type="text/javascript"></script>
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
@@ -54,25 +52,25 @@
         <div class="logo">
             <img src="http://www.gravatar.com/avatar/b7a9682d4568c1313664f46432459f0c.png?size=32" />
         </div>
-        <a class="brand" href="http://shutsin.com">Pavel Shutsin</a>
+        <a class="brand" href="http://shutsin.com" rel="author">Pavel Shutsin</a>
         <ul class="nav">
             <li>
-                <a href="https://github.com/pluff" target="_blank">
+                <a href="https://github.com/pluff" rel="me" target="_blank">
                     <i class="icon-2x icon-github"></i>
                 </a>
             </li>
             <li>
-                <a href="http://www.linkedin.com/in/" target="_blank">
+                <a href="http://www.linkedin.com/in/" rel="me" target="_blank">
                     <i class="icon-2x icon-linkedin"></i>
                 </a>
             </li>
             <li>
-                <a href="http://www.facebook.com/pavel.shutin" target="_blank">
+                <a href="http://www.facebook.com/pavel.shutin" rel="me" target="_blank">
                     <i class="icon-2x icon-facebook"></i>
                 </a>
             </li>
             <li>
-                <a href="https://plus.google.com/105872229152743598110?rel=author" target="_blank">
+                <a href="https://plus.google.com/105872229152743598110?rel=author" rel="me" target="_blank">
                     <i class="icon-2x icon-google-plus-sign"></i>
                 </a>
             </li>
@@ -90,19 +88,22 @@
     </div>
     <div id="blog-tags">
     
-    <h4 id="git">git</h4>
+    <div id="git" name="git" class="anchor">&nbsp;</div>
+    <h4>git</h4>
     
     <div><span>September  8, 2013</span> <a
             href="/2013/09/08/another-git-branching-model/ ">Another git branching model</a></div>
     
     
-    <h4 id="github">github</h4>
+    <div id="github" name="github" class="anchor">&nbsp;</div>
+    <h4>github</h4>
     
     <div><span>September  8, 2013</span> <a
             href="/2013/09/08/another-git-branching-model/ ">Another git branching model</a></div>
     
     
-    <h4 id="development workflow">development workflow</h4>
+    <div id="development workflow" name="development workflow" class="anchor">&nbsp;</div>
+    <h4>development workflow</h4>
     
     <div><span>September  8, 2013</span> <a
             href="/2013/09/08/another-git-branching-model/ ">Another git branching model</a></div>
@@ -113,7 +114,7 @@
 </div>
 </div>
         <div class="span3"><div class="info-block">
-    <div class="about">
+    <div class="about hidden-phone">
         <div class="header">
             <h4>About me</h4>
         </div>
@@ -137,9 +138,9 @@
     </div>
     <div class="tags">
         <h4>Tags Cloud</h4>
-        <a style='font-size: 14px' href='/tags/#development workflow'>development workflow</a>
-<a style='font-size: 16px' href='/tags/#git'>git</a>
-<a style='font-size: 12px' href='/tags/#github'>github</a>
+        <a style='font-size: 17px' href='/tags/#development workflow'>development workflow</a>
+<a style='font-size: 13px' href='/tags/#git'>git</a>
+<a style='font-size: 11px' href='/tags/#github'>github</a>
 
     </div>
     <div>
@@ -183,36 +184,9 @@
 
 
 
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
-    js.src = "//connect.facebook.net/ren_US/all.js#xfbml=1&appId=161212827408577";
-    fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
 
 
 
-  <script type="text/javascript">
-    (function() {
-      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
-      script.src = 'https://apis.google.com/js/plusone.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
-    })();
-  </script>
-
-
-
-  <script type="text/javascript">
-    (function(){
-      var twitterWidgets = document.createElement('script');
-      twitterWidgets.type = 'text/javascript';
-      twitterWidgets.async = true;
-      twitterWidgets.src = '//platform.twitter.com/widgets.js';
-      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
-    })();
-  </script>
 
 
 

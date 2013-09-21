@@ -1,5 +1,4 @@
 
-
 <!DOCTYPE html>
 <!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
 <!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
@@ -10,8 +9,8 @@
   <meta name="author" content="Pavel Shutsin">
 
   
-  <meta name="description" content="This git branching model is used on my current project and is heavily based on github workflow">
-  
+  <meta name="description" content="This successful git branching model is used on my current project and is heavily based on github workflow">
+  <meta name="keywords" content="git, branching, branching in git, github, github-flow, git-flow, web-development, development process, pull requests, code review, гит, гитхаб, ветки в гит, веб разработка, процесс разработки">
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
@@ -20,14 +19,13 @@
 
   
   <link href="//netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css" rel="stylesheet" type="text/css" media="all">
-  <link rel="canonical" href="http://shutsin.com/2013/09/08/another-git-branching-model">
+  <link rel="index" href="http://shutsin.com" title="Pavel Shutsin's Blog">
+  <link rel="canonical"href="http://shutsin.com/2013/09/08/another-git-branching-model">
   <link href="/favicon.ico" rel="icon" type="image/png">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Pavel Shutsin's Blog" type="application/atom+xml">
-  <script src="/javascripts/modernizr-2.0.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
-  <script src="/javascripts/octopress.js" type="text/javascript"></script>
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
@@ -54,25 +52,25 @@
         <div class="logo">
             <img src="http://www.gravatar.com/avatar/b7a9682d4568c1313664f46432459f0c.png?size=32" />
         </div>
-        <a class="brand" href="http://shutsin.com">Pavel Shutsin</a>
+        <a class="brand" href="http://shutsin.com" rel="author">Pavel Shutsin</a>
         <ul class="nav">
             <li>
-                <a href="https://github.com/pluff" target="_blank">
+                <a href="https://github.com/pluff" rel="me" target="_blank">
                     <i class="icon-2x icon-github"></i>
                 </a>
             </li>
             <li>
-                <a href="http://www.linkedin.com/in/" target="_blank">
+                <a href="http://www.linkedin.com/in/" rel="me" target="_blank">
                     <i class="icon-2x icon-linkedin"></i>
                 </a>
             </li>
             <li>
-                <a href="http://www.facebook.com/pavel.shutin" target="_blank">
+                <a href="http://www.facebook.com/pavel.shutin" rel="me" target="_blank">
                     <i class="icon-2x icon-facebook"></i>
                 </a>
             </li>
             <li>
-                <a href="https://plus.google.com/105872229152743598110?rel=author" target="_blank">
+                <a href="https://plus.google.com/105872229152743598110?rel=author" rel="me" target="_blank">
                     <i class="icon-2x icon-google-plus-sign"></i>
                 </a>
             </li>
@@ -84,18 +82,18 @@
 </nav>
   <div class="container">
     <div class="row-fluid">
-        <div class="span9"><div>
+        <div class="span9"><div itemscope itemtype="http://schema.org/Article">
     
 
     
 <div class="article">
     <div class="header">
-        <div class="date pull-right">Sep 8<span>th</span>, 2013</div>
-        <h3>Another Git Branching Model</h3>
+        <div class="date pull-right" itemprop="datePublished" content="2013-09-08">Sep 8<span>th</span>, 2013</div>
+        <h3 itemprop="name"><a href="/2013/09/08/another-git-branching-model/" rel="bookmark">Another Git Branching Model</a></h3>
 
         <div class="clearfix"></div>
     </div>
-    <div class="body user-markup"><p>Today I&rsquo;ll describe git branching model we use on our project.</p>
+    <div class="body user-markup"><p>Today I will describe another successful git branching model we use on our project.</p>
 
 <h4>Prehistory</h4>
 
@@ -108,7 +106,7 @@ As a basis we took <a href="http://scottchacon.com/2011/08/31/github-flow.html">
 
 <h4>Before we start</h4>
 
-<p>This workflow is focused on rapid deployment of any feature as soon as it&rsquo;s ready. Hence, If you have slow and complex QA process this workflow may not work well for you.</p>
+<p>This workflow is focused on rapid deployment of any feature as soon as it is ready. Hence, If you have slow and complex QA process this workflow may not work well for you.</p>
 
 <p><strong>For those who don’t want to read long text</strong> there is a TL;DR paragraph at the end.</p>
 
@@ -134,7 +132,7 @@ As a basis we took <a href="http://scottchacon.com/2011/08/31/github-flow.html">
 of naming convention. We name branches according to tracker issue numbers (ie: <code>12345</code>).
 Lets call these branches &ldquo;feature branches&rdquo;</li>
 <li>No changes here. Every feature branch is a workplace. Code can be unstable or incomplete here.</li>
-<li>We open pull request only when feature developer thinks he&rsquo;s done with the feature. Don&rsquo;t be
+<li>We open pull request only when feature developer thinks he is done with the feature. Don&rsquo;t be
 afraid and write descriptive PR titles. Most of code discussions are done via IM or verbally.
 After PR have been created CI server runs tests on a feature branch,
 other developers review and comment the code, QA team verifies the ticket.
@@ -193,32 +191,30 @@ That will help development team to react faster.</li>
 
 </div>
     <div class="footer">
-        <!--<div class="tags pull-left">-->
-            <!---->
-                <!--<span class="label">-->
-                    <!--<a href="/tags/#git">git</a>-->
-                <!--</span>-->
-            <!---->
-                <!--<span class="label">-->
-                    <!--<a href="/tags/#github">github</a>-->
-                <!--</span>-->
-            <!---->
-                <!--<span class="label">-->
-                    <!--<a href="/tags/#development workflow">development workflow</a>-->
-                <!--</span>-->
-            <!---->
-        <!--</div>-->
+        <div class="tags pull-left">
+            
+                <span class="label">
+                    <a href="/tags/#git" rel="tag">git</a>
+                </span>
+            
+                <span class="label">
+                    <a href="/tags/#github" rel="tag">github</a>
+                </span>
+            
+                <span class="label">
+                    <a href="/tags/#development workflow" rel="tag">development workflow</a>
+                </span>
+            
+        </div>
         <div class="pull-right">
             
             <div class="sharing">
+  <small>Share:</small>
+  <a href="http://twitter.com/intent/tweet?text=Another%20git%20branching%20model+http%3A%2F%2Fshutsin.com%2F2013%2F09%2F08%2Fanother-git-branching-model%2F" title="Share in Twitter" target="_blank"><i class="icon-twitter"></i></a>
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fshutsin.com%2F2013%2F09%2F08%2Fanother-git-branching-model%2F" title="Share in Facebook" target="_blank"><i class="icon-facebook"></i></a>
+  <a href="https://plus.google.com/share?url=http%3A%2F%2Fshutsin.com%2F2013%2F09%2F08%2Fanother-git-branching-model%2F" title="Share in Googgle+" target="_blank"><i class="icon-google-plus-sign"></i></a>
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://shutsin.com/2013/09/08/another-git-branching-model/" data-via="" data-counturl="http://shutsin.com/2013/09/08/another-git-branching-model/" >Tweet</a>
   
-  
-  <div class="g-plusone" data-size="medium"></div>
-  
-  
-    <div class="fb-like" data-send="false" data-layout="button-count" data-width="400" data-show-faces="false"></div>
   
 </div>
 
@@ -245,7 +241,7 @@ That will help development team to react faster.</li>
 </div>
 </div>
         <div class="span3"><div class="info-block">
-    <div class="about">
+    <div class="about hidden-phone">
         <div class="header">
             <h4>About me</h4>
         </div>
@@ -269,9 +265,9 @@ That will help development team to react faster.</li>
     </div>
     <div class="tags">
         <h4>Tags Cloud</h4>
-        <a style='font-size: 13px' href='/tags/#development workflow'>development workflow</a>
-<a style='font-size: 11px' href='/tags/#git'>git</a>
-<a style='font-size: 17px' href='/tags/#github'>github</a>
+        <a style='font-size: 18px' href='/tags/#development workflow'>development workflow</a>
+<a style='font-size: 13px' href='/tags/#git'>git</a>
+<a style='font-size: 18px' href='/tags/#github'>github</a>
 
     </div>
     <div>
@@ -318,36 +314,9 @@ That will help development team to react faster.</li>
 
 
 
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
-    js.src = "//connect.facebook.net/ren_US/all.js#xfbml=1&appId=161212827408577";
-    fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
 
 
 
-  <script type="text/javascript">
-    (function() {
-      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
-      script.src = 'https://apis.google.com/js/plusone.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
-    })();
-  </script>
-
-
-
-  <script type="text/javascript">
-    (function(){
-      var twitterWidgets = document.createElement('script');
-      twitterWidgets.type = 'text/javascript';
-      twitterWidgets.async = true;
-      twitterWidgets.src = '//platform.twitter.com/widgets.js';
-      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
-    })();
-  </script>
 
 
 
