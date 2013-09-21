@@ -2,7 +2,7 @@
 <div class="article-item">
     <div class="header">
         <div class="date pull-right">{{ post.date_formatted }}</div>
-        <h3><a href="{{root_url}}{{post.url}}">{{post.title | titlecase}}</a></h3>
+        <h3><a href="{{root_url}}{{post.url}}" rel="bookmark">{{post.title | titlecase}}</a></h3>
 
         <div class="clearfix"></div>
     </div>
@@ -17,20 +17,20 @@
 {% else %}
 <div class="article">
     <div class="header">
-        <div class="date pull-right" itemprop="datePublished" content="{{ post.date | date: '%Y-%m-%d' }}">{{ page.date_formatted }}</div>
-        <h3 itemprop="name">{{ page.title | titlecase }}</h3>
+        <div class="date pull-right" itemprop="datePublished" content="{{ page.date | date: '%Y-%m-%d' }}">{{ page.date_formatted }}</div>
+        <h3 itemprop="name"><a href="{{root_url}}{{page.url}}" rel="bookmark">{{page.title | titlecase}}</a></h3>
 
         <div class="clearfix"></div>
     </div>
     <div class="body user-markup">{{ content }}</div>
     <div class="footer">
-        <!--<div class="tags pull-left">-->
-            <!--{% for tag in page.tags %}-->
-                <!--<span class="label">-->
-                    <!--<a href="{{root_url}}/tags/#{{tag}}">{{ tag }}</a>-->
-                <!--</span>-->
-            <!--{% endfor %}-->
-        <!--</div>-->
+        <div class="tags pull-left">
+            {% for tag in page.tags %}
+                <span class="label">
+                    <a href="{{root_url}}/tags/#{{tag}}" rel="tag">{{ tag }}</a>
+                </span>
+            {% endfor %}
+        </div>
         <div class="pull-right">
             {% unless page.sharing == false %}
             {% include post/sharing.html %}

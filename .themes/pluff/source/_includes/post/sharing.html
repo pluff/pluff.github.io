@@ -1,4 +1,8 @@
 <div class="sharing">
+  <small>Share:</small>
+  <a href="http://twitter.com/intent/tweet?text={{page.title | url_encode}}+{{site.url | url_encode}}{{page.url | url_encode}}" title="Share in Twitter" target="_blank"><i class="icon-twitter"></i></a>
+  <a href="https://www.facebook.com/sharer/sharer.php?u={{site.url | url_encode}}{{page.url | url_encode}}" title="Share in Facebook" target="_blank"><i class="icon-facebook"></i></a>
+  <a href="https://plus.google.com/share?url={{site.url | url_encode}}{{page.url | url_encode}}" title="Share in Googgle+" target="_blank"><i class="icon-google-plus-sign"></i></a>
   {% if site.twitter_tweet_button %}
   <a href="//twitter.com/share" class="twitter-share-button" data-url="{{ site.url }}{{ page.url }}" data-via="{{ site.twitter_user }}" data-counturl="{{ site.url }}{{ page.url }}" >Tweet</a>
   {% endif %}
