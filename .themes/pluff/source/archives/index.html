@@ -12,7 +12,7 @@ footer: false
     <h4>{{ this_year }}</h4>
     {% endif %}
     {% if this_date != last_date %}
-    <div id="{{ this_date }}"></div>
+    <div id="{{ this_date }}" name="{{ this_date }}" class="anchor">&nbsp;</div>
     {% endif %}
 
     <div><span>{{ post.date | date: "%B %e, %Y" }}</span> <a

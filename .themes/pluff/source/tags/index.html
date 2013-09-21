@@ -6,7 +6,8 @@ footer: false
 
 <div id="blog-tags">
     {% for tag in site.tags reverse %}
-    <h4 id="{{ tag[0] }}">{{ tag[0] }}</h4>
+    <div id="{{ tag[0] }}" name="{{ tag[0] }}" class="anchor">&nbsp;</div>
+    <h4>{{ tag[0] }}</h4>
     {% for post in tag[1] %}
     <div><span>{{ post.date | date: "%B %e, %Y" }}</span> <a
             href="{{ site_url }}{{post.url}} ">{{ post.title }}</a></div>

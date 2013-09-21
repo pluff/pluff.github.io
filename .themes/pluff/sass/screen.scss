@@ -114,6 +114,10 @@ $articleBorderHighlight: #004400;
 }
 
 .info-block {
+  @media (max-width: 767px) {
+    margin-top: $baseLineHeight;
+  }
+
   @include content-block;
 
   .body {

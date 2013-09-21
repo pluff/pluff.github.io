@@ -1,13 +1,14 @@
 ---
 layout: post
 title: "Another git branching model"
-description: "This git branching model is used on my current project and is heavily based on github workflow"
+description: "This successful git branching model is used on my current project and is heavily based on github workflow"
 date: 2013-09-08 18:42
 comments: true
+keywords: git, branching, branching in git, github, github-flow, git-flow, web-development, development process, pull requests, code review, гит, гитхаб, ветки в гит, веб разработка, процесс разработки
 tags: [git, github, development workflow]
 ---
 
-Today I'll describe git branching model we use on our project.
+Today I'll describe another successful git branching model we use on our project.
 
 #### Prehistory
 

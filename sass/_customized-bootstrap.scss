@@ -15,7 +15,19 @@ $infoBackground: #c9dfc5;
 @import "bootstrap/bootstrap";
 
 body {
-  padding-top: $navbarHeight+$baseLineHeight;
+  margin-top: $navbarHeight+$baseLineHeight;
+  @media (max-width: 979px) {
+    margin-top: 0;
+  }
+}
+
+.anchor {
+  position: relative;
+  top: -($navbarHeight+3*$baseLineHeight);
+  @media (max-width: 979px) {
+    top: 0;
+  }
+  line-height: 0px;
 }
 
 @import "bootstrap/responsive";
