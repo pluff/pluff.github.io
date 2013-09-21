@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Pavel Shutsin's Blog]]></title>
+  <title><![CDATA[Addicted to Ruby, In love with OOP]]></title>
   <link href="http://shutsin.com/atom.xml" rel="self"/>
   <link href="http://shutsin.com/"/>
-  <updated>2013-09-21T20:56:52+03:00</updated>
+  <updated>2013-09-21T21:01:17+03:00</updated>
   <id>http://shutsin.com/</id>
   <author>
     <name><![CDATA[Pavel Shutsin]]></name>
