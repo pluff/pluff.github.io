@@ -1,18 +1,15 @@
 <div class="info-block">
-    <div class="about hidden-phone" itemscope itemtype="http://schema.org/Person">
+    <div class="about hidden-phone">
         <div class="header">
             <h4>About me</h4>
         </div>
         <div class="body">
-            <a href="{{ site.url }}" itemprop="url"><img src="{{ site.gravatar }}?size=128"
-                                          itemprop="image"></a>
-
+            <img src="{{ site.gravatar }}?size=128">
             <div class="clearfix"></div>
             <p>
-                My name is <span itemprop="name">{{ site.author }}</span> and I'm
-                <span itemprop="jobTitle">Ruby addicted</span> from <span itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
-                <span itemprop="addressLocality">Minsk, Belarus</span>. You can check out more info in my social accounts listed above.
-                    </span>
+                My name is {{ site.author }} and I'm
+                <a href="http://www.ruby-lang.org/">Ruby</a>
+                addicted from Belarus. You can check out more info in my social accounts listed above.
             </p>
         </div>
     </div>
@@ -32,12 +29,12 @@
         <h4>Archives</h4>
         <ul>
             {% for post in site.posts reverse %}
-            {% capture this_date %}{{ post.date | date: "%B %Y" }}{% endcapture %}
-            {% if last_date != this_date %}
-            {% capture anchor_name %}{{ post.date | date: "%B%Y" }}{% endcapture %}
-            <li><a href="/archives#{{anchor_name}}">{{this_date}}</a></li>
-            {% endif %}
-            {% assign last_date = this_date %}
+                {% capture this_date %}{{ post.date | date: "%B %Y" }}{% endcapture %}
+                {% if last_date != this_date %}
+                    {% capture anchor_name %}{{ post.date | date: "%B%Y" }}{% endcapture %}
+                    <li><a href="/archives#{{anchor_name}}">{{this_date}}</a></li>
+                {% endif %}
+                {% assign last_date = this_date %}
             {% endfor %}
         </ul>
 
