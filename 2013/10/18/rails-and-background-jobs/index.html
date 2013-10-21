@@ -1,24 +1,112 @@
-<?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Addicted to Ruby, In love the Web]]></title>
-  <link href="http://shutsin.com/atom.xml" rel="self"/>
-  <link href="http://shutsin.com/"/>
-  <updated>2013-10-21T13:52:22+03:00</updated>
-  <id>http://shutsin.com/</id>
-  <author>
-    <name><![CDATA[Pavel Shutsin]]></name>
-    
-  </author>
-  <generator uri="http://octopress.org/">Octopress</generator>
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Rails and background jobs - Addicted to Ruby, In love the Web</title>
+  <meta name="author" content="Pavel Shutsin">
 
   
-  <entry>
-    <title type="html"><![CDATA[Rails and background jobs]]></title>
-    <link href="http://shutsin.com/2013/10/18/rails-and-background-jobs/"/>
-    <updated>2013-10-18T16:44:00+03:00</updated>
-    <id>http://shutsin.com/2013/10/18/rails-and-background-jobs</id>
-    <content type="html"><![CDATA[<p><img class="center" src="http://shutsin.com/images/2013-10-18-rails-and-background-jobs.png"></p>
+  <meta name="description" content="Some details on background jobs integration with Rails including after_save and after_commit callbacks, dirty attributes, promises concept and &hellip;">
+  <meta name="keywords" content="ruby, rails, ruby on rails, ror, background jobs, delayed jobs, resque, background workers, callbacks, after_save, after_commit, after_update">
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link href="//netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css" rel="stylesheet" type="text/css" media="all">
+  <link rel="index" href="http://shutsin.com" title="Addicted to Ruby, In love the Web">
+  <link rel="canonical"href="http://shutsin.com/2013/10/18/rails-and-background-jobs">
+  <link href="/favicon.ico" rel="icon" type="image/png">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Addicted to Ruby, In love the Web" type="application/atom+xml">
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="/javascripts/libs/bootstrap.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-41905992-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body >
+  <nav role="navigation"><div class="navbar navbar-fixed-top top-bar">
+    <div class="navbar-inner">
+        <div class="logo">
+            <img src="http://www.gravatar.com/avatar/b7a9682d4568c1313664f46432459f0c.png?size=64" width="32" height="32" />
+        </div>
+        <a class="brand" href="http://shutsin.com" rel="author">Pavel Shutsin</a>
+        <ul class="nav">
+            <li>
+                <a href="https://github.com/pluff" rel="me" target="_blank">
+                    <i class="icon-2x icon-github"></i>
+                </a>
+            </li>
+            <li>
+                <a href="http://www.linkedin.com/in/" rel="me" target="_blank">
+                    <i class="icon-2x icon-linkedin"></i>
+                </a>
+            </li>
+            <li>
+                <a href="http://www.facebook.com/pavel.shutin" rel="me" target="_blank">
+                    <i class="icon-2x icon-facebook"></i>
+                </a>
+            </li>
+            <li>
+                <a href="https://plus.google.com/105872229152743598110?rel=author" rel="me" target="_blank">
+                    <i class="icon-2x icon-google-plus-sign"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+</nav>
+  <div class="container">
+    <div class="row-fluid">
+        <div class="span9"><div itemscope itemtype="http://schema.org/Article">
+    
+<div>
+    <p class="meta">
+        
+        <a class="pull-left" href="/2013/09/08/another-git-branching-model/"
+           title="Previous Post: Another git branching model"><i class="icon-arrow-left"></i>
+            Another git branching model</a>
+        
+        
+    </p>
+    <div class="clearfix"></div>
+</div>
+
+
+    
+<div class="article">
+    <div class="header">
+        <div class="date pull-right" itemprop="datePublished" content="2013-10-18">Oct 18<span>th</span>, 2013</div>
+        <h3 itemprop="name"><a href="/2013/10/18/rails-and-background-jobs/" rel="bookmark">Rails and Background Jobs</a></h3>
+
+        <div class="clearfix"></div>
+    </div>
+    <div class="body user-markup"><p><img class="center" src="/images/2013-10-18-rails-and-background-jobs.png"></p>
 
 <p>Background jobs concept is a great way to postpone some tasks to another thread.
 Today I&rsquo;ll show you how we can use it with Rails and make our application a bit (or a lot) faster.</p>
@@ -199,111 +287,167 @@ Next few rules can help you to avoid common mistakes with integration of backgro
 <li>Use observers whenever you see that callback logic does not belong to observed model.</li>
 </ol>
 
-]]></content>
-  </entry>
+</div>
+    <div class="footer">
+        <div class="tags pull-left">
+            
+                <span class="label">
+                    <a href="/tags/#ruby" rel="tag">ruby</a>
+                </span>
+            
+                <span class="label">
+                    <a href="/tags/#rails" rel="tag">rails</a>
+                </span>
+            
+                <span class="label">
+                    <a href="/tags/#background jobs" rel="tag">background jobs</a>
+                </span>
+            
+                <span class="label">
+                    <a href="/tags/#Resque" rel="tag">Resque</a>
+                </span>
+            
+        </div>
+        <div class="pull-right">
+            
+            <div class="sharing">
+  <small>Share:</small>
+  <a href="http://twitter.com/intent/tweet?text=Rails%20and%20background%20jobs+http%3A%2F%2Fshutsin.com%2F2013%2F10%2F18%2Frails-and-background-jobs%2F" title="Share in Twitter" target="_blank"><i class="icon-twitter"></i></a>
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fshutsin.com%2F2013%2F10%2F18%2Frails-and-background-jobs%2F" title="Share in Facebook" target="_blank"><i class="icon-facebook"></i></a>
+  <a href="https://plus.google.com/share?url=http%3A%2F%2Fshutsin.com%2F2013%2F10%2F18%2Frails-and-background-jobs%2F" title="Share in Google+" target="_blank"><i class="icon-google-plus-sign"></i></a>
   
-  <entry>
-    <title type="html"><![CDATA[Another git branching model]]></title>
-    <link href="http://shutsin.com/2013/09/08/another-git-branching-model/"/>
-    <updated>2013-09-08T18:42:00+03:00</updated>
-    <id>http://shutsin.com/2013/09/08/another-git-branching-model</id>
-    <content type="html"><![CDATA[<p>Today I will describe another successful git branching model we use on our project.</p>
-
-<h4>Prehistory</h4>
-
-<p>We tried <a href="http://nvie.com/posts/a-successful-git-branching-model/">git-flow</a> and it appeared to be too complicated for our small team.
-After thinking for a while we built up our own workflow that perfectly matches our <a href="http://en.wikipedia.org/wiki/Continuous_delivery">continuous delivery</a> needs.
-As a basis we took <a href="http://scottchacon.com/2011/08/31/github-flow.html">github flow</a> which is extremely simple and effective.</p>
-
-<!-- more -->
-
-
-<h4>Before we start</h4>
-
-<p>This workflow is focused on rapid deployment of any feature as soon as it is ready. Hence, If you have slow and complex QA process this workflow may not work well for you.</p>
-
-<p><strong>For those who don’t want to read long text</strong> there is a TL;DR paragraph at the end.</p>
-
-<h4>Adjustments to github-flow</h4>
-
-<p>Github workflow rules look like this:</p>
-
-<ol>
-<li>Anything in the <code>master</code> branch is deployable</li>
-<li>To work on something new, create a descriptively named branch off of <code>master</code> (ie: <code>new-oauth2-scopes</code>)</li>
-<li>Commit to that branch locally and regularly push your work to the same named branch on the server</li>
-<li>When you need feedback or help, or you think the branch is ready for merging, open a <a href="https://help.github.com/articles/using-pull-requests">pull request</a>(PR)</li>
-<li>After someone else has reviewed and signed off on the feature, you can merge it into <code>master</code></li>
-<li>Once it is merged and pushed to <code>master</code>, you can and should deploy immediately</li>
-</ol>
-
-
-<p>Lets go through each rule.</p>
-
-<ol>
-<li>Perfect rule! <code>master</code> should always be stable enough to be deployed to production.</li>
-<li>We felt little lack of connection between issue and branch name, so we made slight change
-of naming convention. We name branches according to tracker issue numbers (ie: <code>12345</code>).
-Lets call these branches &ldquo;feature branches&rdquo;</li>
-<li>No changes here. Every feature branch is a workplace. Code can be unstable or incomplete here.</li>
-<li>We open pull request only when feature developer thinks he is done with the feature. Don&rsquo;t be
-afraid and write descriptive PR titles. Most of code discussions are done via IM or verbally.
-After PR have been created CI server runs tests on a feature branch,
-other developers review and comment the code, QA team verifies the ticket.
-Developers are responsible to keep feature branch up-to-date with <code>master</code> to minimize
-possibility of conflicts.</li>
-<li>After all conditions of point 4 have been met product
-owner/delivery manager/whoever_responsible_for_delivery can merge the branch into <code>master</code>.
-It&rsquo;s highly recommended to do this as soon as possible, so <code>master</code> doesn&rsquo;t diverge from feature branch too much.
-In 99% product owner is happy to merge and deploy feature as soon as it&rsquo;s ready.
-Development team shouldn&rsquo;t merge feature branches since we want product owner to have
-control on what should be deployed.</li>
-<li>Immediate deploy can be the thing that is not appreciated by business side of the product,
-so we keep the right to deploy to product owner. As soon as feature branch is merged development
-team should think of it as &ldquo;deployed&rdquo;. Real deploy can happen whenever product owner decides to do it.</li>
-</ol>
-
-
-<h4>Handling large feature packs</h4>
-
-<p>Besides small independent features there can be a large pack of features that doesn&rsquo;t make
-much sense without each other. We call such packs &ldquo;epics&rdquo;.</p>
-
-<p>Lets say our project has a redesign planned in 15 tickets. For some reason business side of
-the product wants to all these features to be deployed at once, so we can&rsquo;t deploy them as
-soon as each of them is ready. First person, who starts to work with ticket related to &ldquo;epic&rdquo;,
-starts new epic branch (ie: <code>epic/app_redesign</code>). This &ldquo;epic&rdquo; branch should be treated
-like temporary <code>master</code> for all features related to the app redesign. Your pull requests
-should point to &ldquo;epic&rdquo; branch. However, you need to base all your branches on <code>master</code>.
-After all tickets in &ldquo;epic&rdquo; are done we can create PR to <code>master</code>, do final
-review\CI\QA cycle and merge it.</p>
-
-<h4>For those who don&rsquo;t want to read long text above</h4>
-
-<p>Here are all steps summarized.</p>
-
-<ol>
-<li><code>master</code> branch should be always deployable to production.</li>
-<li>To work on something new, create a branch off of <code>master</code> using feature ticket number (ie: <code>feature/12345</code>)</li>
-<li>Commit to that branch locally and regularly push your work to the same named branch on the server</li>
-<li>Whenever you think you have finished the feature create a PR to <code>master</code> or to
-&ldquo;epic&rdquo; branch in case of &ldquo;epic&rdquo; related feature. (see &ldquo;Handling large feature packs&rdquo;)</li>
-<li>After someone else has reviewed the code and QA team signed off on the feature,
-product owner can merge it into <code>master</code></li>
-<li>Product owner can deploy <code>master</code> to production any time.</li>
-</ol>
-
-
-<h4>Workflow enchancements</h4>
-
-<ul>
-<li>It&rsquo;s helpful to have automated mails via github hooks for PRs with unresolved conflicts.
-That will help development team to react faster.</li>
-<li>The script that will deploy feature-branch + latest <code>master</code> is helpful for QA team.</li>
-<li>Github + CI bots help to track CI build status on each feature branch.</li>
-</ul>
-
-]]></content>
-  </entry>
   
-</feed>
+  
+</div>
+
+            
+        </div>
+        <div class="clearfix"></div>
+
+    </div>
+
+</div>
+<div class="clearfix"></div>
+
+
+    
+<div>
+    <p class="meta">
+        
+        <a class="pull-left" href="/2013/09/08/another-git-branching-model/"
+           title="Previous Post: Another git branching model"><i class="icon-arrow-left"></i>
+            Another git branching model</a>
+        
+        
+    </p>
+    <div class="clearfix"></div>
+</div>
+
+
+    <div class="content-block-separator"></div>
+    
+    <div class="article-comments">
+        <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+        </div>
+    </div>
+    
+</div>
+</div>
+        <div class="span3"><div class="info-block">
+    <div class="about hidden-phone">
+        <div class="header">
+            <h4>About me</h4>
+        </div>
+        <div class="body">
+            <img src="http://www.gravatar.com/avatar/b7a9682d4568c1313664f46432459f0c.png?size=128">
+            <div class="clearfix"></div>
+            <p>
+                My name is Pavel Shutsin and I'm
+                <a href="http://www.ruby-lang.org/">Ruby</a>
+                addicted from Belarus. You can check out more info in my social accounts listed above.
+            </p>
+        </div>
+    </div>
+    <div class="recent">
+        <h4>Recent Posts</h4>
+        <ul>
+            
+            <li><a href="/2013/10/18/rails-and-background-jobs/">Rails and background jobs</a></li>
+            
+            <li><a href="/2013/09/08/another-git-branching-model/">Another git branching model</a></li>
+            
+        </ul>
+    </div>
+    <div class="tags">
+        <h4>Tags Cloud</h4>
+        <a style='font-size: 12px' href='/tags/#Resque'>Resque</a>
+<a style='font-size: 18px' href='/tags/#background jobs'>background jobs</a>
+<a style='font-size: 20px' href='/tags/#development workflow'>development workflow</a>
+<a style='font-size: 18px' href='/tags/#git'>git</a>
+<a style='font-size: 11px' href='/tags/#github'>github</a>
+<a style='font-size: 18px' href='/tags/#rails'>rails</a>
+<a style='font-size: 14px' href='/tags/#ruby'>ruby</a>
+
+    </div>
+    <div>
+        <h4>Archives</h4>
+        <ul>
+            
+                
+                
+                    
+                    <li><a href="/archives#October2013">October 2013</a></li>
+                
+                
+            
+                
+                
+                    
+                    <li><a href="/archives#September2013">September 2013</a></li>
+                
+                
+            
+        </ul>
+
+    </div>
+</div>
+</div>
+    </div>
+  </div>
+  <footer role="contentinfo"><div class="page-footer">
+    <div class="text-center">
+        <small>&copy; 2013 Pavel Shutsin</small>
+    </div>
+</div>
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'pluff';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://shutsin.com/2013/10/18/rails-and-background-jobs/';
+        var disqus_url = 'http://shutsin.com/2013/10/18/rails-and-background-jobs/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

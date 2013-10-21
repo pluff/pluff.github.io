@@ -92,6 +92,52 @@
       
 <div class="article-item">
     <div class="header">
+        <div class="date pull-right">Oct 18<span>th</span>, 2013</div>
+        <h3><a href="/2013/10/18/rails-and-background-jobs/" rel="bookmark">Rails and Background Jobs</a></h3>
+
+        <div class="clearfix"></div>
+    </div>
+    <div class="body user-markup">
+        <div class="entry-content"><p><img class="center" src="/images/2013-10-18-rails-and-background-jobs.png"></p>
+
+<p>Background jobs concept is a great way to postpone some tasks to another thread.
+Today I&rsquo;ll show you how we can use it with Rails and make our application a bit (or a lot) faster.</p>
+
+<h4>Initial state</h4>
+
+<p>Lets say we have user model with <code>email</code> attribute and we want to send email to
+administrator each time user email changes.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:Base</span>
+</span><span class='line'>  <span class="n">after_save</span> <span class="k">do</span> <span class="o">|</span><span class="n">user</span><span class="o">|</span>
+</span><span class='line'>    <span class="n">send_email</span> <span class="k">if</span> <span class="n">user</span><span class="o">.</span><span class="n">email_changed?</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+</div>
+        
+        
+        <a rel="full-article" href="/2013/10/18/rails-and-background-jobs/">Read on &rarr;</a>
+        
+    </div>
+</div>
+
+
+      
+        <div class="content-block-separator"></div>
+      
+  
+  
+      
+<div class="article-item">
+    <div class="header">
         <div class="date pull-right">Sep 8<span>th</span>, 2013</div>
         <h3><a href="/2013/09/08/another-git-branching-model/" rel="bookmark">Another Git Branching Model</a></h3>
 
@@ -140,20 +186,33 @@ As a basis we took <a href="http://scottchacon.com/2011/08/31/github-flow.html">
         <h4>Recent Posts</h4>
         <ul>
             
+            <li><a href="/2013/10/18/rails-and-background-jobs/">Rails and background jobs</a></li>
+            
             <li><a href="/2013/09/08/another-git-branching-model/">Another git branching model</a></li>
             
         </ul>
     </div>
     <div class="tags">
         <h4>Tags Cloud</h4>
-        <a style='font-size: 14px' href='/tags/#development workflow'>development workflow</a>
-<a style='font-size: 11px' href='/tags/#git'>git</a>
-<a style='font-size: 19px' href='/tags/#github'>github</a>
+        <a style='font-size: 10px' href='/tags/#Resque'>Resque</a>
+<a style='font-size: 14px' href='/tags/#background jobs'>background jobs</a>
+<a style='font-size: 17px' href='/tags/#development workflow'>development workflow</a>
+<a style='font-size: 15px' href='/tags/#git'>git</a>
+<a style='font-size: 13px' href='/tags/#github'>github</a>
+<a style='font-size: 20px' href='/tags/#rails'>rails</a>
+<a style='font-size: 17px' href='/tags/#ruby'>ruby</a>
 
     </div>
     <div>
         <h4>Archives</h4>
         <ul>
+            
+                
+                
+                    
+                    <li><a href="/archives#October2013">October 2013</a></li>
+                
+                
             
                 
                 
