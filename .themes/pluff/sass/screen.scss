@@ -10,9 +10,8 @@
 }
 
 @import "customized-bootstrap";
-@import "github-highlighting";
-
 @import "layout";
+@import "github-highlighting";
 
 a:hover {
   text-decoration: none;
@@ -212,6 +211,19 @@ $articleBorderHighlight: #004400;
       border-top: none;
       padding: 0px;
     }
+  }
+}
+
+img {
+  &.center {
+    display: block;
+    margin: 0 auto;
+  }
+  &.left {
+    float: left;
+  }
+  &.right {
+    float: right;
   }
 }
 
