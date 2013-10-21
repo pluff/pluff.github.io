@@ -8,7 +8,7 @@ categories:
 keywords: ruby, rails, ruby on rails, ror, background jobs, delayed jobs, resque, background workers, callbacks, after_save, after_commit, after_update
 tags: [ruby, rails ,background jobs, Resque]
 ---
-{% img center /images/2013-10-18-rails-and-background-jobs.png %}
+<img src="/images/2013-10-18-rails-and-background-jobs.png" class="center" itemprop="image">
 
 Background jobs concept is a great way to postpone some tasks to another thread.
 Today I'll show you how we can use it with Rails and make our application a bit (or a lot) faster.
