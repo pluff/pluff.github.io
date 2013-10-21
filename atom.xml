@@ -4,7 +4,7 @@
   <title><![CDATA[Addicted to Ruby, In love the Web]]></title>
   <link href="http://shutsin.com/atom.xml" rel="self"/>
   <link href="http://shutsin.com/"/>
-  <updated>2013-10-21T13:52:22+03:00</updated>
+  <updated>2013-10-21T14:01:12+03:00</updated>
   <id>http://shutsin.com/</id>
   <author>
     <name><![CDATA[Pavel Shutsin]]></name>
@@ -18,7 +18,7 @@
     <link href="http://shutsin.com/2013/10/18/rails-and-background-jobs/"/>
     <updated>2013-10-18T16:44:00+03:00</updated>
     <id>http://shutsin.com/2013/10/18/rails-and-background-jobs</id>
-    <content type="html"><![CDATA[<p><img class="center" src="http://shutsin.com/images/2013-10-18-rails-and-background-jobs.png"></p>
+    <content type="html"><![CDATA[<p><img src="http://shutsin.com/images/2013-10-18-rails-and-background-jobs.png" class="center" itemprop="image"></p>
 
 <p>Background jobs concept is a great way to postpone some tasks to another thread.
 Today I&rsquo;ll show you how we can use it with Rails and make our application a bit (or a lot) faster.</p>
