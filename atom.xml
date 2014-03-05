@@ -4,7 +4,7 @@
   <title><![CDATA[Addicted to Ruby, In love the Web]]></title>
   <link href="http://shutsin.com/atom.xml" rel="self"/>
   <link href="http://shutsin.com/"/>
-  <updated>2014-03-05T12:52:31+03:00</updated>
+  <updated>2014-03-05T13:05:09+03:00</updated>
   <id>http://shutsin.com/</id>
   <author>
     <name><![CDATA[Pavel Shutsin]]></name>
@@ -183,7 +183,7 @@ We can get rid of it with mighty <code>method_missing</code>!</p>
 <p>Feels much better! Now our decorator pretends to be a User and delegates all undefined method calls to user object. Oh, wait a second&hellip;
 <code>decorated_user.respond_to? :first_name #=&gt; false</code> ouch!
 <code>respond_to?</code> returns false unless there is a defined method on our class,
-so we need UserDecorator to be a little bit more like User and treat all User.instance_methods as its own.</p>
+so we need UserDecorator to be a even more like User and treat all User.instance_methods as its own.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -211,11 +211,11 @@ so we need UserDecorator to be a little bit more like User and treat all User.in
 
 
 <p>One step closer to success! Obviously we can delegate class methods and constants to User class as well.
-This approach is implemented in most popular presenters gem for Rails called <a href="https://github.com/drapergem/draper">Draper</a>.
+This approach is implemented in the most popular presenters gem for Rails called <a href="https://github.com/drapergem/draper">Draper</a>.
 You can check <a href="https://github.com/drapergem/draper/blob/594816661e0c6c48d6137f4472b8c731c3dd8df8/lib/draper/automatic_delegation.rb">this file</a> for details.
-Draper is great and very rich featured gem but imvho it&rsquo;s has a bit of &ldquo;swiss army knife&rdquo; syndrome.</p>
+Draper is a great and very rich featured gem but imvho it has a bit of &ldquo;swiss army knife&rdquo; syndrome.</p>
 
-<p>There are couple weak places in this approach:</p>
+<p>There is a couple weak places in this approach:</p>
 
 <ol>
 <li>Our decorator class pretends to be a User but it&rsquo;s not a User! <code>decorated_user.is_a? User #=&gt; false</code></li>
@@ -223,7 +223,7 @@ Draper is great and very rich featured gem but imvho it&rsquo;s has a bit of &ld
 </ol>
 
 
-<p>Let&rsquo;s think a bit how we can decorate our model even better.</p>
+<p>Let&rsquo;s think how we can decorate our model even better.</p>
 
 <h4>Extend me if you want!</h4>
 
@@ -280,15 +280,15 @@ Can we add these methods to our model only when we really need it? Yes we can!</
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>You can also overwrite base User methods here too for your particular object if you want.
+<p>You can also overwrite base User methods if you want.
 This approach allows us to add presentational methods per instance and keep our model class clean.
 Our decorated object does not pretend to be a User anymore, it is a User!
 Second most popular gem for Rails presenters called <a href="https://github.com/amatsuda/active_decorator">active_decorator</a> has similar implementation with some additional features.
 You can check <a href="https://github.com/amatsuda/active_decorator/blob/af3b6c60718106496b4acacd816325b00cfb873a/lib/active_decorator/decorator.rb#L31">this file</a> for details.</p>
 
-<p>Of course there is no free cheese in this world, and we need to pay the price.</p>
+<p>Of course there is no free cheese in this world and we need to pay the price.</p>
 
-<p>Week places of this approach:</p>
+<p>Weak places of this approach:</p>
 
 <ol>
 <li>calling Object#extend is expensive.</li>
@@ -299,7 +299,7 @@ You can check <a href="https://github.com/amatsuda/active_decorator/blob/af3b6c6
 
 <p>In real world there are use cases when you need additional params in your representation methods.
 With decoration &ldquo;wrapper&rdquo; class it&rsquo;s as easy as adding additional parameters to initialize method.
-With &ldquo;extending&rdquo; it&rsquo;s a little bit more complex since you can&rsquo;t pass additional params to extend method, so you have to add them after extending.</p>
+With &ldquo;extending&rdquo; it&rsquo;s slightly more complex since you can&rsquo;t pass additional params to extend method, so you have to add them after extending.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -353,7 +353,7 @@ With &ldquo;extending&rdquo; it&rsquo;s a little bit more complex since you can&
 
 <h4>Benchmarks. Can I take a nap while it works?</h4>
 
-<p>Are you curious what&rsquo;s the real performance numbers for both approaches? I&rsquo;m too! Here is the test I used for benchmarking:</p>
+<p>Are you curious what&rsquo;s the real performance numbers for both approaches? So do I! Here is the test I used for benchmarking:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -428,7 +428,7 @@ With &ldquo;extending&rdquo; it&rsquo;s a little bit more complex since you can&
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>First benchmark row shows us time Ruby spends for creating simple object.
+<p>First benchmark row shows us the time Ruby spends for creating simple object.
 Second one represents time spent for decorating via &ldquo;wrapping&rdquo;.
 Third row represents time spent for decorating via extending.
 Last 2 rows represent time spent for calling <code>User#base_method</code> for &ldquo;wrapping&rdquo; and extending approaches respectively.
@@ -471,8 +471,8 @@ Here is the results:</p>
 
 <p>As we can see &ldquo;wrapping&rdquo; an object is almost 4 times faster (more than 9 times faster with Ruby 2.1.0).
 On the other side method calls from undecorated base class is roughly 3 times faster with &ldquo;extend&rdquo; approach.
-If your views use a lot of method calls per object extending will work faster.
-If you have plenty of small objects and low method calls frequency &ldquo;wrapping&rdquo; will work faster for you.</p>
+If your views use a lot of method calls per object then extending will work faster.
+If you have plenty of small objects and low method calls frequency then &ldquo;wrapping&rdquo; will work faster for you.</p>
 
 <h4>Conclusion</h4>
 
