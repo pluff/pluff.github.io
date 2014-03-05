@@ -104,23 +104,12 @@
 <h4>Intro</h4>
 
 <p><a href="http://en.wikipedia.org/wiki/Decorator_pattern">Decorator</a> is a common design pattern which allows us to add behavior to individual objects.
-Ruby simplicity and flexibility provides several ways to implement it. Today we will write couple implementations and will do a bit of analysis of existing gems.</p>
+Ruby simplicity and flexibility provides several ways to implement it. Today we will write a couple of implementations and will do an overview of existing gems.</p>
 
-<h4>Keep our model as clean as we can</h4>
+<h4>Keep our model as clean as possible</h4>
 
-<p>In MVC world it&rsquo;s widely used for adding presentation logic methods to a model without polluting model class. Let&rsquo;s say we have very simple <code>User</code> model:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">User</span>
-</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:first_name</span><span class="p">,</span> <span class="ss">:last_name</span><span class="p">,</span> <span class="ss">:title</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>And we have brand new special logic that states &ldquo;User&rsquo;s full name should be displayed as blablabla&rdquo;.
-Sample solution can be something like that:</p>
+<p>In MVC world decorators are widely used for adding presentation logic methods to a model without polluting a model class.
+Let&rsquo;s say we have very simple <code>User</code> model and special logic for displaying user&rsquo;s full name.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>

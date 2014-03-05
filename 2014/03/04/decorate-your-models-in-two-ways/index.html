@@ -112,23 +112,12 @@
 <h4>Intro</h4>
 
 <p><a href="http://en.wikipedia.org/wiki/Decorator_pattern">Decorator</a> is a common design pattern which allows us to add behavior to individual objects.
-Ruby simplicity and flexibility provides several ways to implement it. Today we will write couple implementations and will do a bit of analysis of existing gems.</p>
+Ruby simplicity and flexibility provides several ways to implement it. Today we will write a couple of implementations and will do an overview of existing gems.</p>
 
-<h4>Keep our model as clean as we can</h4>
+<h4>Keep our model as clean as possible</h4>
 
-<p>In MVC world it&rsquo;s widely used for adding presentation logic methods to a model without polluting model class. Let&rsquo;s say we have very simple <code>User</code> model:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">User</span>
-</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:first_name</span><span class="p">,</span> <span class="ss">:last_name</span><span class="p">,</span> <span class="ss">:title</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>And we have brand new special logic that states &ldquo;User&rsquo;s full name should be displayed as blablabla&rdquo;.
-Sample solution can be something like that:</p>
+<p>In MVC world decorators are widely used for adding presentation logic methods to a model without polluting a model class.
+Let&rsquo;s say we have very simple <code>User</code> model and special logic for displaying user&rsquo;s full name.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -164,7 +153,7 @@ Sample solution can be something like that:</p>
 <!-- more -->
 
 
-<p>Imagine there are 50 of similar methods for various view-related stuff. Your model will become a mess in a blink of an eye!
+<p>Imagine there are 50 similar methods for various view-related stuff. Your model will become a mess in a blink of an eye!
 If you came from Rails world you can use Rails helpers and move all representation methods there:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -203,9 +192,9 @@ Another solution could be to move all extra methods to a separate module and inc
 <p>This solutions works fine, but it still adds plenty of methods to your User class even when you might not need it.
 We can do better than that! We can keep our models as clean as we can and move our view helpers to another layer.</p>
 
-<h4>Wrap me a model please</h4>
+<h4>Wrap me a model, please</h4>
 
-<p>Lets create a new class <code>UserDecorator</code> that wraps our User object and add additional method on top of it.</p>
+<p>Lets create a new class <code>UserDecorator</code> that wraps our User object and adds additional method on top of it.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -280,7 +269,7 @@ We can get rid of it with mighty <code>method_missing</code>!</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Feels much better! Now our decorator pretends to be a User and delegates all undefined method calls to user object. Oh wait a second&hellip;
+<p>Feels much better! Now our decorator pretends to be a User and delegates all undefined method calls to user object. Oh, wait a second&hellip;
 <code>decorated_user.respond_to? :first_name #=&gt; false</code> ouch!
 <code>respond_to?</code> returns false unless there is a defined method on our class,
 so we need UserDecorator to be a little bit more like User and treat all User.instance_methods as its own.</p>
@@ -313,7 +302,7 @@ so we need UserDecorator to be a little bit more like User and treat all User.in
 <p>One step closer to success! Obviously we can delegate class methods and constants to User class as well.
 This approach is implemented in most popular presenters gem for Rails called <a href="https://github.com/drapergem/draper">Draper</a>.
 You can check <a href="https://github.com/drapergem/draper/blob/594816661e0c6c48d6137f4472b8c731c3dd8df8/lib/draper/automatic_delegation.rb">this file</a> for details.
-Draper is great and very rich featured gem, but imvho it&rsquo;s has a bit of &ldquo;swiss army knife&rdquo; syndrome.</p>
+Draper is great and very rich featured gem but imvho it&rsquo;s has a bit of &ldquo;swiss army knife&rdquo; syndrome.</p>
 
 <p>There are couple weak places in this approach:</p>
 
