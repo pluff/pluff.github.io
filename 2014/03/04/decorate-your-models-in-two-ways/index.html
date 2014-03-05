@@ -1,24 +1,183 @@
-<?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Addicted to Ruby, In love the Web]]></title>
-  <link href="http://shutsin.com/atom.xml" rel="self"/>
-  <link href="http://shutsin.com/"/>
-  <updated>2014-03-05T11:49:02+03:00</updated>
-  <id>http://shutsin.com/</id>
-  <author>
-    <name><![CDATA[Pavel Shutsin]]></name>
-    
-  </author>
-  <generator uri="http://octopress.org/">Octopress</generator>
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Decorate your models in two ways - Addicted to Ruby, In love the Web</title>
+  <meta name="author" content="Pavel Shutsin">
 
   
-  <entry>
-    <title type="html"><![CDATA[Decorate your models in two ways]]></title>
-    <link href="http://shutsin.com/2014/03/04/decorate-your-models-in-two-ways/"/>
-    <updated>2014-03-04T23:08:00+03:00</updated>
-    <id>http://shutsin.com/2014/03/04/decorate-your-models-in-two-ways</id>
-    <content type="html"><![CDATA[<p><img src="http://shutsin.com/images/2014-03-04-decorate-your-models-in-two-ways.png" class="center" itemprop="image"></p>
+  <meta name="description" content="Common decorator implementations under the scope. Step by step implementation, pros and cons, benchmarks, tips & tricks.">
+  <meta name="keywords" content="ruby, decorator pattern, decorator, presenters, benchmark, graper, active_decorator, ruby decorator gem, mvc">
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link href="//netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css" rel="stylesheet" type="text/css" media="all">
+  <link rel="index" href="http://shutsin.com" title="Addicted to Ruby, In love the Web">
+  <link rel="canonical"href="http://shutsin.com/2014/03/04/decorate-your-models-in-two-ways">
+  <link href="/favicon.ico" rel="icon" type="image/png">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Addicted to Ruby, In love the Web" type="application/atom+xml">
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="/javascripts/libs/bootstrap.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-41905992-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body >
+<nav role="navigation"><div class="navbar navbar-fixed-top top-bar">
+    <div class="navbar-inner">
+        <div class="logo">
+            <img src="http://www.gravatar.com/avatar/b7a9682d4568c1313664f46432459f0c.png?size=64" width="32" height="32" />
+        </div>
+        <a class="brand" href="http://shutsin.com" rel="author">Pavel Shutsin</a>
+        <ul class="nav">
+            <li>
+                <a href="https://github.com/pluff" rel="me" target="_blank">
+                    <i class="icon-2x icon-github"></i>
+                </a>
+            </li>
+            <li>
+                <a href="http://www.linkedin.com/in/shutsin" rel="me" target="_blank">
+                    <i class="icon-2x icon-linkedin"></i>
+                </a>
+            </li>
+            <li>
+                <a href="http://www.facebook.com/pavel.shutin" rel="me" target="_blank">
+                    <i class="icon-2x icon-facebook"></i>
+                </a>
+            </li>
+            <li>
+                <a href="https://plus.google.com/105872229152743598110?rel=author" rel="me" target="_blank">
+                    <i class="icon-2x icon-google-plus-sign"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+</nav>
+<div class="container">
+    <div class="row-fluid">
+        <div class="span3 pull-right"><div class="info-block">
+    <div class="about hidden-phone">
+        <div class="header">
+            <h4>About me</h4>
+        </div>
+        <div class="body">
+            <img src="http://www.gravatar.com/avatar/b7a9682d4568c1313664f46432459f0c.png?size=128">
+            <div class="clearfix"></div>
+            <p>
+                My name is Pavel Shutsin and I'm
+                <a href="http://www.ruby-lang.org/">Ruby</a>
+                addicted from Belarus. You can check out more info in my social accounts listed above.
+            </p>
+        </div>
+    </div>
+    <div class="recent">
+        <h4>Recent Posts</h4>
+        <ul>
+            
+            <li><a href="/2014/03/04/decorate-your-models-in-two-ways/">Decorate your models in two ways</a></li>
+            
+            <li><a href="/2013/10/18/rails-and-background-jobs/">Rails and background jobs</a></li>
+            
+            <li><a href="/2013/09/08/another-git-branching-model/">Another git branching model</a></li>
+            
+        </ul>
+    </div>
+    <div class="tags">
+        <h4>Tags Cloud</h4>
+        <a style='font-size: 10px' href='/tags/#Resque'>Resque</a>
+<a style='font-size: 10px' href='/tags/#background jobs'>background jobs</a>
+<a style='font-size: 10px' href='/tags/#decorator'>decorator</a>
+<a style='font-size: 10px' href='/tags/#development workflow'>development workflow</a>
+<a style='font-size: 10px' href='/tags/#git'>git</a>
+<a style='font-size: 10px' href='/tags/#github'>github</a>
+<a style='font-size: 10px' href='/tags/#mvc'>mvc</a>
+<a style='font-size: 10px' href='/tags/#rails'>rails</a>
+<a style='font-size: 20px' href='/tags/#ruby'>ruby</a>
+
+    </div>
+    <div>
+        <h4>Archives</h4>
+        <ul>
+            
+                
+                
+                    
+                    <li><a href="/archives#March2014">March 2014</a></li>
+                
+                
+            
+                
+                
+                    
+                    <li><a href="/archives#October2013">October 2013</a></li>
+                
+                
+            
+                
+                
+                    
+                    <li><a href="/archives#September2013">September 2013</a></li>
+                
+                
+            
+        </ul>
+
+    </div>
+</div>
+</div>
+        <div class="span9"><div itemscope itemtype="http://schema.org/Article">
+    
+<div>
+    <p class="meta">
+        
+        <a class="pull-left" href="/2013/10/18/rails-and-background-jobs/"
+           title="Previous Post: Rails and background jobs"><i class="icon-arrow-left"></i>
+            Rails and background jobs</a>
+        
+        
+    </p>
+    <div class="clearfix"></div>
+</div>
+
+
+    
+
+<div class="article">
+    <div class="header">
+        <div class="date pull-right" itemprop="datePublished" content="2014-03-04">Mar 4<span>th</span>, 2014</div>
+        <h3 itemprop="name"><a href="/2014/03/04/decorate-your-models-in-two-ways/" rel="bookmark">Decorate Your Models in Two Ways</a></h3>
+
+        <div class="clearfix"></div>
+    </div>
+    <div class="body user-markup"><p><img src="/images/2014-03-04-decorate-your-models-in-two-ways.png" class="center" itemprop="image"></p>
 
 <h4>Intro</h4>
 
@@ -492,300 +651,104 @@ Using modules and &ldquo;Object#extend&rdquo; provides us another way how to dec
 Both methods have their weaknesses and you just need to choose what fits you better.</p>
 
 <p>Thanks, and see you next time!</p>
-]]></content>
-  </entry>
+</div>
+    <div class="footer">
+        <div class="tags pull-left">
+            
+                <span class="label">
+                    <a href="/tags/#ruby" rel="tag">ruby</a>
+                </span>
+            
+                <span class="label">
+                    <a href="/tags/#decorator" rel="tag">decorator</a>
+                </span>
+            
+                <span class="label">
+                    <a href="/tags/#mvc" rel="tag">mvc</a>
+                </span>
+            
+        </div>
+        <div class="pull-right">
+            
+            <div class="sharing">
+  <small>Share:</small>
+  <a href="http://twitter.com/intent/tweet?text=Decorate%20your%20models%20in%20two%20ways+http%3A%2F%2Fshutsin.com%2F2014%2F03%2F04%2Fdecorate-your-models-in-two-ways%2F" title="Share in Twitter" target="_blank"><i class="icon-twitter"></i></a>
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fshutsin.com%2F2014%2F03%2F04%2Fdecorate-your-models-in-two-ways%2F" title="Share in Facebook" target="_blank"><i class="icon-facebook"></i></a>
+  <a href="https://plus.google.com/share?url=http%3A%2F%2Fshutsin.com%2F2014%2F03%2F04%2Fdecorate-your-models-in-two-ways%2F" title="Share in Google+" target="_blank"><i class="icon-google-plus-sign"></i></a>
   
-  <entry>
-    <title type="html"><![CDATA[Rails and background jobs]]></title>
-    <link href="http://shutsin.com/2013/10/18/rails-and-background-jobs/"/>
-    <updated>2013-10-18T16:44:00+03:00</updated>
-    <id>http://shutsin.com/2013/10/18/rails-and-background-jobs</id>
-    <content type="html"><![CDATA[<p><img src="http://shutsin.com/images/2013-10-18-rails-and-background-jobs.png" class="center" itemprop="image"></p>
-
-<p>Background jobs concept is a great way to postpone some tasks to another thread.
-Today I&rsquo;ll show you how we can use it with Rails and make our application a bit (or a lot) faster.</p>
-
-<h4>Initial state</h4>
-
-<p>Lets say we have user model with <code>email</code> attribute and we want to send email to
-administrator each time user email changes.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:Base</span>
-</span><span class='line'>  <span class="n">after_save</span> <span class="k">do</span> <span class="o">|</span><span class="n">user</span><span class="o">|</span>
-</span><span class='line'>    <span class="n">send_email</span> <span class="k">if</span> <span class="n">user</span><span class="o">.</span><span class="n">email_changed?</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<!-- more -->
-
-
-<p>Let&rsquo;s assume that <code>send_email</code> method represents &ldquo;all things that should be done&rdquo;.
-We don&rsquo;t care much about its implementation.
-Example above works perfectly but has one weakness. What will happen if <code>send_email</code> method takes 10 seconds to run?
-User will have to wait for ten seconds.
-What can we do about that?</p>
-
-<h4>Resque to the resque!</h4>
-
-<p>We can move execution of our <code>send_email</code> method to separate process.
-<a href="https://github.com/resque/resque">Resque</a> is the most popular among the <a href="https://www.ruby-toolbox.com/categories/Background_Jobs">plenty of gems</a> for background jobs.
-Resque stores all background jobs in a queue (or multiple queues) in Redis and processes it later within another processes (workers).
-Let&rsquo;s rewrite example code with Resque.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:Base</span>
-</span><span class='line'>  <span class="n">after_save</span> <span class="k">do</span> <span class="o">|</span><span class="n">user</span><span class="o">|</span>
-</span><span class='line'>    <span class="no">Resque</span><span class="o">.</span><span class="n">enqueue</span><span class="p">(</span><span class="no">Mailer</span><span class="p">,</span> <span class="n">user</span><span class="o">.</span><span class="n">id</span><span class="p">)</span> <span class="k">if</span> <span class="n">user</span><span class="o">.</span><span class="n">email_changed?</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">module</span> <span class="nn">Mailer</span>
-</span><span class='line'>  <span class="vi">@queue</span> <span class="o">=</span> <span class="s2">&quot;mailer_queue&quot;</span>
-</span><span class='line'>  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">perform</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">user</span> <span class="o">=</span> <span class="no">User</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">user</span><span class="o">.</span><span class="n">send_email</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>When user email is changed Resque will enqueue <code>Mailer.perform</code> method call with model id as param.
-<code>Mailer.perform</code> method will actually be called in another process.
-Resque implementation is not the main topic of this post, so, if you want to learn more about Resque check this great <a href="http://railscasts.com/episodes/271-resque">RailsCast</a>.
-From this point I&rsquo;ll assume that you understand the concept of background jobs.</p>
-
-<h4>New problems</h4>
-
-<p>Moving <code>send_email</code> method execution to separate process was a great idea, but it brought a small problem.
-Sometimes when Resque tries to call <code>Mailer.perform</code> it throws an exception &ldquo;User with id XXX was not found&rdquo;.
-According to <a href="http://api.rubyonrails.org/classes/ActiveRecord/Callbacks.html">ActiveRecord::Callbacks</a> <code>after_save</code>
-callback is performed when DB transaction is not committed yet. That&rsquo;s why <code>User.find</code> can&rsquo;t find User.
-As you might already understand I was too eager with enqueue.</p>
-
-<p><strong>Always use after_commit instead of after_create\after_update\after_save for background jobs</strong>.</p>
-
-<p>That&rsquo;s the golden rule. <code>after_commit</code> ensures that transaction was successfully committed to DB and all records were stored.
-Lets update the code!</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:Base</span>
-</span><span class='line'>  <span class="n">after_commit</span> <span class="k">do</span> <span class="o">|</span><span class="n">user</span><span class="o">|</span>
-</span><span class='line'>    <span class="no">Resque</span><span class="o">.</span><span class="n">enqueue</span><span class="p">(</span><span class="no">Mailer</span><span class="p">,</span> <span class="n">user</span><span class="o">.</span><span class="n">id</span><span class="p">)</span> <span class="k">if</span> <span class="n">user</span><span class="o">.</span><span class="n">email_changed?</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'><span class="c1">#...</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>That should work. Oh wait&hellip; it doesn&rsquo;t!</p>
-
-<h4>after_commit limitations and the ways to deal with them</h4>
-
-<p>The code above never enqueues mail sending because <code>user.email_changed?</code> is always false.
-For some reason <a href="http://api.rubyonrails.org/classes/ActiveModel/Dirty.html">dirty</a> state of
-our model resets before <code>after_commit</code> callback is executed, so every <code>xxx_changed?</code> returns false and every <code>xxx_was</code>
-does NOT return old values.</p>
-
-<p>In <code>after_save</code> we CAN&rsquo;T enqueue because we can&rsquo;t be sure record is already saved to DB properly.
-In <code>after_commit</code> we DON&rsquo;T have access to previous state of our model.
-Here is where the concept of promises comes to play.</p>
-
-<p>Let&rsquo;s think about what we CAN do at each of these callbacks.
-In <code>after_save</code> we can say if we should enqueue or not as we can check if email is changed or not.
-In <code>after_commit</code> we can just enqueue a background job.
-So, our solution is to promise to enqueue the job as soon as we can enqueue. Simple implementation looks like that:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:Base</span>
-</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:need_enqueue</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="n">after_save</span> <span class="k">do</span> <span class="o">|</span><span class="n">user</span><span class="o">|</span>
-</span><span class='line'>    <span class="n">need_enqueue</span> <span class="o">=</span> <span class="kp">true</span> <span class="k">if</span> <span class="n">user</span><span class="o">.</span><span class="n">email_changed?</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="n">after_commit</span> <span class="k">do</span> <span class="o">|</span><span class="n">user</span><span class="o">|</span>
-</span><span class='line'>    <span class="no">Resque</span><span class="o">.</span><span class="n">enqueue</span><span class="p">(</span><span class="no">Mailer</span><span class="p">,</span> <span class="n">user</span><span class="o">.</span><span class="n">id</span><span class="p">)</span> <span class="k">if</span> <span class="n">user</span><span class="o">.</span><span class="n">need_enqueue</span>
-</span><span class='line'>    <span class="n">user</span><span class="o">.</span><span class="n">need_enqueue</span> <span class="o">=</span> <span class="kp">nil</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'><span class="c1">#...</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Finally it works! I want to point out that the concept of promises can be skipped if we don&rsquo;t need any dirty attribute in our <code>after_commit</code> callback.
-E.g. Lets assume than our business requirement was the following: &ldquo;Send a email to admin each time user is created.&rdquo;
-In this case implementation is as simple as</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:Base</span>
-</span><span class='line'>  <span class="n">after_commit</span><span class="p">,</span> <span class="ss">on</span><span class="p">:</span> <span class="ss">:create</span> <span class="k">do</span> <span class="o">|</span><span class="n">user</span><span class="o">|</span>
-</span><span class='line'>    <span class="no">Resque</span><span class="o">.</span><span class="n">enqueue</span><span class="p">(</span><span class="no">Mailer</span><span class="p">,</span> <span class="n">user</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'><span class="c1">#...</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>As my last point I want to mention that callback above can be moved to observer.
-As for me I like observers a lot so I usually move all accompanying callbacks to observers (e.g. mail sending, logging, cache invalidation etc)</p>
-
-<h4>Summary</h4>
-
-<p>Sometimes background jobs make our response from servers considerably faster by cost of additional code complexity.
-Next few rules can help you to avoid common mistakes with integration of background jobs.</p>
-
-<ol>
-<li>Always use <code>after_commit</code> for background jobs callbacks to avoid race condition.</li>
-<li>Use concept of promises in case you need dirty attributes for callback logic.</li>
-<li>Use observers whenever you see that callback logic does not belong to observed model.</li>
-</ol>
-
-]]></content>
-  </entry>
   
-  <entry>
-    <title type="html"><![CDATA[Another git branching model]]></title>
-    <link href="http://shutsin.com/2013/09/08/another-git-branching-model/"/>
-    <updated>2013-09-08T18:42:00+03:00</updated>
-    <id>http://shutsin.com/2013/09/08/another-git-branching-model</id>
-    <content type="html"><![CDATA[<p>Today I will describe another successful git branching model we use on our project.</p>
-
-<h4>Prehistory</h4>
-
-<p>We tried <a href="http://nvie.com/posts/a-successful-git-branching-model/">git-flow</a> and it appeared to be too complicated for our small team.
-After thinking for a while we built up our own workflow that perfectly matches our <a href="http://en.wikipedia.org/wiki/Continuous_delivery">continuous delivery</a> needs.
-As a basis we took <a href="http://scottchacon.com/2011/08/31/github-flow.html">github flow</a> which is extremely simple and effective.</p>
-
-<!-- more -->
-
-
-<h4>Before we start</h4>
-
-<p>This workflow is focused on rapid deployment of any feature as soon as it is ready. Hence, If you have slow and complex QA process this workflow may not work well for you.</p>
-
-<p><strong>For those who don’t want to read long text</strong> there is a TL;DR paragraph at the end.</p>
-
-<h4>Adjustments to github-flow</h4>
-
-<p>Github workflow rules look like this:</p>
-
-<ol>
-<li>Anything in the <code>master</code> branch is deployable</li>
-<li>To work on something new, create a descriptively named branch off of <code>master</code> (ie: <code>new-oauth2-scopes</code>)</li>
-<li>Commit to that branch locally and regularly push your work to the same named branch on the server</li>
-<li>When you need feedback or help, or you think the branch is ready for merging, open a <a href="https://help.github.com/articles/using-pull-requests">pull request</a>(PR)</li>
-<li>After someone else has reviewed and signed off on the feature, you can merge it into <code>master</code></li>
-<li>Once it is merged and pushed to <code>master</code>, you can and should deploy immediately</li>
-</ol>
-
-
-<p>Lets go through each rule.</p>
-
-<ol>
-<li>Perfect rule! <code>master</code> should always be stable enough to be deployed to production.</li>
-<li>We felt little lack of connection between issue and branch name, so we made slight change
-of naming convention. We name branches according to tracker issue numbers (ie: <code>12345</code>).
-Lets call these branches &ldquo;feature branches&rdquo;</li>
-<li>No changes here. Every feature branch is a workplace. Code can be unstable or incomplete here.</li>
-<li>We open pull request only when feature developer thinks he is done with the feature. Don&rsquo;t be
-afraid and write descriptive PR titles. Most of code discussions are done via IM or verbally.
-After PR have been created CI server runs tests on a feature branch,
-other developers review and comment the code, QA team verifies the ticket.
-Developers are responsible to keep feature branch up-to-date with <code>master</code> to minimize
-possibility of conflicts.</li>
-<li>After all conditions of point 4 have been met product
-owner/delivery manager/whoever_responsible_for_delivery can merge the branch into <code>master</code>.
-It&rsquo;s highly recommended to do this as soon as possible, so <code>master</code> doesn&rsquo;t diverge from feature branch too much.
-In 99% product owner is happy to merge and deploy feature as soon as it&rsquo;s ready.
-Development team shouldn&rsquo;t merge feature branches since we want product owner to have
-control on what should be deployed.</li>
-<li>Immediate deploy can be the thing that is not appreciated by business side of the product,
-so we keep the right to deploy to product owner. As soon as feature branch is merged development
-team should think of it as &ldquo;deployed&rdquo;. Real deploy can happen whenever product owner decides to do it.</li>
-</ol>
-
-
-<h4>Handling large feature packs</h4>
-
-<p>Besides small independent features there can be a large pack of features that doesn&rsquo;t make
-much sense without each other. We call such packs &ldquo;epics&rdquo;.</p>
-
-<p>Lets say our project has a redesign planned in 15 tickets. For some reason business side of
-the product wants to all these features to be deployed at once, so we can&rsquo;t deploy them as
-soon as each of them is ready. First person, who starts to work with ticket related to &ldquo;epic&rdquo;,
-starts new epic branch (ie: <code>epic/app_redesign</code>). This &ldquo;epic&rdquo; branch should be treated
-like temporary <code>master</code> for all features related to the app redesign. Your pull requests
-should point to &ldquo;epic&rdquo; branch. However, you need to base all your branches on <code>master</code>.
-After all tickets in &ldquo;epic&rdquo; are done we can create PR to <code>master</code>, do final
-review\CI\QA cycle and merge it.</p>
-
-<h4>For those who don&rsquo;t want to read long text above</h4>
-
-<p>Here are all steps summarized.</p>
-
-<ol>
-<li><code>master</code> branch should be always deployable to production.</li>
-<li>To work on something new, create a branch off of <code>master</code> using feature ticket number (ie: <code>feature/12345</code>)</li>
-<li>Commit to that branch locally and regularly push your work to the same named branch on the server</li>
-<li>Whenever you think you have finished the feature create a PR to <code>master</code> or to
-&ldquo;epic&rdquo; branch in case of &ldquo;epic&rdquo; related feature. (see &ldquo;Handling large feature packs&rdquo;)</li>
-<li>After someone else has reviewed the code and QA team signed off on the feature,
-product owner can merge it into <code>master</code></li>
-<li>Product owner can deploy <code>master</code> to production any time.</li>
-</ol>
-
-
-<h4>Workflow enchancements</h4>
-
-<ul>
-<li>It&rsquo;s helpful to have automated mails via github hooks for PRs with unresolved conflicts.
-That will help development team to react faster.</li>
-<li>The script that will deploy feature-branch + latest <code>master</code> is helpful for QA team.</li>
-<li>Github + CI bots help to track CI build status on each feature branch.</li>
-</ul>
-
-]]></content>
-  </entry>
   
-</feed>
+</div>
+
+            
+        </div>
+        <div class="clearfix"></div>
+
+    </div>
+
+</div>
+<div class="clearfix"></div>
+
+
+    
+<div>
+    <p class="meta">
+        
+        <a class="pull-left" href="/2013/10/18/rails-and-background-jobs/"
+           title="Previous Post: Rails and background jobs"><i class="icon-arrow-left"></i>
+            Rails and background jobs</a>
+        
+        
+    </p>
+    <div class="clearfix"></div>
+</div>
+
+
+    <div class="content-block-separator"></div>
+    
+    <div class="article-comments">
+        <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+        </div>
+    </div>
+    
+</div>
+</div>
+    </div>
+</div>
+<footer role="contentinfo"><div class="page-footer">
+    <div class="text-center">
+        <small>&copy; 2014 Pavel Shutsin</small>
+    </div>
+</div>
+</footer>
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'pluff';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://shutsin.com/2014/03/04/decorate-your-models-in-two-ways/';
+        var disqus_url = 'http://shutsin.com/2014/03/04/decorate-your-models-in-two-ways/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -48,7 +48,7 @@
 </head>
 
 <body >
-  <nav role="navigation"><div class="navbar navbar-fixed-top top-bar">
+<nav role="navigation"><div class="navbar navbar-fixed-top top-bar">
     <div class="navbar-inner">
         <div class="logo">
             <img src="http://www.gravatar.com/avatar/b7a9682d4568c1313664f46432459f0c.png?size=64" width="32" height="32" />
@@ -81,8 +81,78 @@
 
 
 </nav>
-  <div class="container">
+<div class="container">
     <div class="row-fluid">
+        <div class="span3 pull-right"><div class="info-block">
+    <div class="about hidden-phone">
+        <div class="header">
+            <h4>About me</h4>
+        </div>
+        <div class="body">
+            <img src="http://www.gravatar.com/avatar/b7a9682d4568c1313664f46432459f0c.png?size=128">
+            <div class="clearfix"></div>
+            <p>
+                My name is Pavel Shutsin and I'm
+                <a href="http://www.ruby-lang.org/">Ruby</a>
+                addicted from Belarus. You can check out more info in my social accounts listed above.
+            </p>
+        </div>
+    </div>
+    <div class="recent">
+        <h4>Recent Posts</h4>
+        <ul>
+            
+            <li><a href="/2014/03/04/decorate-your-models-in-two-ways/">Decorate your models in two ways</a></li>
+            
+            <li><a href="/2013/10/18/rails-and-background-jobs/">Rails and background jobs</a></li>
+            
+            <li><a href="/2013/09/08/another-git-branching-model/">Another git branching model</a></li>
+            
+        </ul>
+    </div>
+    <div class="tags">
+        <h4>Tags Cloud</h4>
+        <a style='font-size: 10px' href='/tags/#Resque'>Resque</a>
+<a style='font-size: 10px' href='/tags/#background jobs'>background jobs</a>
+<a style='font-size: 10px' href='/tags/#decorator'>decorator</a>
+<a style='font-size: 10px' href='/tags/#development workflow'>development workflow</a>
+<a style='font-size: 10px' href='/tags/#git'>git</a>
+<a style='font-size: 10px' href='/tags/#github'>github</a>
+<a style='font-size: 10px' href='/tags/#mvc'>mvc</a>
+<a style='font-size: 10px' href='/tags/#rails'>rails</a>
+<a style='font-size: 20px' href='/tags/#ruby'>ruby</a>
+
+    </div>
+    <div>
+        <h4>Archives</h4>
+        <ul>
+            
+                
+                
+                    
+                    <li><a href="/archives#March2014">March 2014</a></li>
+                
+                
+            
+                
+                
+                    
+                    <li><a href="/archives#October2013">October 2013</a></li>
+                
+                
+            
+                
+                
+                    
+                    <li><a href="/archives#September2013">September 2013</a></li>
+                
+                
+            
+        </ul>
+
+    </div>
+</div>
+</div>
         <div class="span9"><div class="articles">
   
 
@@ -90,6 +160,85 @@
   
   
       
+
+<div class="article-item">
+    <div class="header">
+        <div class="date pull-right">Mar 4<span>th</span>, 2014</div>
+        <h3><a href="/2014/03/04/decorate-your-models-in-two-ways/" rel="bookmark">Decorate Your Models in Two Ways</a></h3>
+
+        <div class="clearfix"></div>
+    </div>
+    <div class="body user-markup">
+        <div class="entry-content"><p><img src="/images/2014-03-04-decorate-your-models-in-two-ways.png" class="center" itemprop="image"></p>
+
+<h4>Intro</h4>
+
+<p><a href="http://en.wikipedia.org/wiki/Decorator_pattern">Decorator</a> is a common design pattern which allows us to add behavior to individual objects.
+Ruby simplicity and flexibility provides several ways to implement it. Today we will write couple implementations and will do a bit of analysis of existing gems.</p>
+
+<h4>Keep our model as clean as we can</h4>
+
+<p>In MVC world it&rsquo;s widely used for adding presentation logic methods to a model without polluting model class. Let&rsquo;s say we have very simple <code>User</code> model:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">User</span>
+</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:first_name</span><span class="p">,</span> <span class="ss">:last_name</span><span class="p">,</span> <span class="ss">:title</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And we have brand new special logic that states &ldquo;User&rsquo;s full name should be displayed as blablabla&rdquo;.
+Sample solution can be something like that:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">User</span>
+</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:first_name</span><span class="p">,</span> <span class="ss">:last_name</span><span class="p">,</span> <span class="ss">:title</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">full_name</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">title</span> <span class="o">==</span> <span class="s2">&quot;Doctor&quot;</span>
+</span><span class='line'>      <span class="s2">&quot;</span><span class="si">#{</span><span class="n">title</span><span class="si">}</span><span class="s2"> </span><span class="si">#{</span><span class="n">first_name</span><span class="si">}</span><span class="s2"> </span><span class="si">#{</span><span class="n">last_name</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'>    <span class="k">elsif</span> <span class="n">title</span>
+</span><span class='line'>      <span class="s2">&quot;</span><span class="si">#{</span><span class="n">first_name</span><span class="si">}</span><span class="s2"> </span><span class="si">#{</span><span class="n">last_name</span><span class="si">}</span><span class="s2"> </span><span class="si">#{</span><span class="n">title</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'>    <span class="k">else</span>
+</span><span class='line'>      <span class="s2">&quot;</span><span class="si">#{</span><span class="n">first_name</span><span class="si">}</span><span class="s2"> </span><span class="si">#{</span><span class="n">last_name</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Short and simple, however it provides one nasty side effect as your project grows.</p>
+
+</div>
+        
+        
+        <a rel="full-article" href="/2014/03/04/decorate-your-models-in-two-ways/">Read on &rarr;</a>
+        
+    </div>
+</div>
+
+
+      
+        <div class="content-block-separator"></div>
+      
+  
+  
+      
+
 <div class="article-item">
     <div class="header">
         <div class="date pull-right">Oct 18<span>th</span>, 2013</div>
@@ -136,6 +285,7 @@ administrator each time user email changes.</p>
   
   
       
+
 <div class="article-item">
     <div class="header">
         <div class="date pull-right">Sep 8<span>th</span>, 2013</div>
@@ -167,74 +317,15 @@ As a basis we took <a href="http://scottchacon.com/2011/08/31/github-flow.html">
 
 </div>
 </div>
-        <div class="span3"><div class="info-block">
-    <div class="about hidden-phone">
-        <div class="header">
-            <h4>About me</h4>
-        </div>
-        <div class="body">
-            <img src="http://www.gravatar.com/avatar/b7a9682d4568c1313664f46432459f0c.png?size=128">
-            <div class="clearfix"></div>
-            <p>
-                My name is Pavel Shutsin and I'm
-                <a href="http://www.ruby-lang.org/">Ruby</a>
-                addicted from Belarus. You can check out more info in my social accounts listed above.
-            </p>
-        </div>
-    </div>
-    <div class="recent">
-        <h4>Recent Posts</h4>
-        <ul>
-            
-            <li><a href="/2013/10/18/rails-and-background-jobs/">Rails and background jobs</a></li>
-            
-            <li><a href="/2013/09/08/another-git-branching-model/">Another git branching model</a></li>
-            
-        </ul>
-    </div>
-    <div class="tags">
-        <h4>Tags Cloud</h4>
-        <a style='font-size: 18px' href='/tags/#Resque'>Resque</a>
-<a style='font-size: 15px' href='/tags/#background jobs'>background jobs</a>
-<a style='font-size: 20px' href='/tags/#development workflow'>development workflow</a>
-<a style='font-size: 15px' href='/tags/#git'>git</a>
-<a style='font-size: 16px' href='/tags/#github'>github</a>
-<a style='font-size: 16px' href='/tags/#rails'>rails</a>
-<a style='font-size: 19px' href='/tags/#ruby'>ruby</a>
-
-    </div>
-    <div>
-        <h4>Archives</h4>
-        <ul>
-            
-                
-                
-                    
-                    <li><a href="/archives#October2013">October 2013</a></li>
-                
-                
-            
-                
-                
-                    
-                    <li><a href="/archives#September2013">September 2013</a></li>
-                
-                
-            
-        </ul>
-
     </div>
 </div>
-</div>
-    </div>
-  </div>
-  <footer role="contentinfo"><div class="page-footer">
+<footer role="contentinfo"><div class="page-footer">
     <div class="text-center">
-        <small>&copy; 2013 Pavel Shutsin</small>
+        <small>&copy; 2014 Pavel Shutsin</small>
     </div>
 </div>
 </footer>
-  
+
 
 <script type="text/javascript">
       var disqus_shortname = 'pluff';

@@ -2,26 +2,30 @@
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
         <loc>http://shutsin.com/2013/09/08/another-git-branching-model/</loc>
-        <lastmod>2013-10-21T23:30:42+03:00</lastmod>
+        <lastmod>2013-10-29T02:10:50+03:00</lastmod>
     </url>
     <url>
         <loc>http://shutsin.com/2013/10/18/rails-and-background-jobs/</loc>
-        <lastmod>2013-10-21T23:30:42+03:00</lastmod>
+        <lastmod>2013-10-29T02:10:50+03:00</lastmod>
+    </url>
+    <url>
+        <loc>http://shutsin.com/2014/03/04/decorate-your-models-in-two-ways/</loc>
+        <lastmod>2014-03-05T11:12:46+03:00</lastmod>
     </url>
     <url>
         <loc>http://shutsin.com/archives/</loc>
-        <lastmod>2013-10-21T23:30:42+03:00</lastmod>
+        <lastmod>2014-03-05T11:12:46+03:00</lastmod>
     </url>
     <url>
         <loc>http://shutsin.com/</loc>
-        <lastmod>2013-10-21T23:30:42+03:00</lastmod>
+        <lastmod>2014-03-05T11:12:46+03:00</lastmod>
     </url>
     <url>
         <loc>http://shutsin.com/robots.txt</loc>
-        <lastmod>2013-10-21T23:30:42+03:00</lastmod>
+        <lastmod>2013-10-29T02:10:50+03:00</lastmod>
     </url>
     <url>
         <loc>http://shutsin.com/tags/</loc>
-        <lastmod>2013-10-21T23:30:42+03:00</lastmod>
+        <lastmod>2014-03-05T11:12:46+03:00</lastmod>
     </url>
 </urlset>
