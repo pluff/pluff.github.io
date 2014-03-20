@@ -1,7 +1,7 @@
 /**
  * Identity map pattern for AngularJs
  * @version v0.1 - 2014-03-20 * @link https://github.com/pluff/angular-identitymap
- * @author Pavel Shutsin <martin@gon.to>
+ * @author Pavel Shutsin <publicshady@gmail.com>
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
 var module = angular.module('identity-map', []);
@@ -53,6 +53,9 @@ module.service('identityMap', function() {
     },
     flush: function() {
       return map = {};
+    },
+    getMap: function() {
+      return map;
     }
   };
 });
