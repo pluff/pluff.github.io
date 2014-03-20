@@ -1,0 +1,428 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>AngularJS and Identity map - Addicted to Ruby, In love the Web</title>
+  <meta name="author" content="Pavel Shutsin">
+
+  
+  <meta name="description" content="Rich angular apps really suffer from loads of API calls. Identity map pattern serves us to reduce number of API calls and objects created">
+  <meta name="keywords" content="javascript, angular, angularjs, js, identity map, identitymap, restangular">
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link href="//netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css" rel="stylesheet" type="text/css" media="all">
+  <link rel="index" href="http://shutsin.com" title="Addicted to Ruby, In love the Web">
+  <link rel="canonical"href="http://shutsin.com/2014/03/20/angularjs-and-identity-map">
+  <link href="/favicon.ico" rel="icon" type="image/png">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Addicted to Ruby, In love the Web" type="application/atom+xml">
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="/javascripts/libs/bootstrap.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-41905992-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body >
+<nav role="navigation"><div class="navbar navbar-fixed-top top-bar">
+    <div class="navbar-inner">
+        <div class="logo">
+            <img src="http://www.gravatar.com/avatar/b7a9682d4568c1313664f46432459f0c.png?size=64" width="32" height="32" />
+        </div>
+        <a class="brand" href="http://shutsin.com" rel="author">Pavel Shutsin</a>
+        <ul class="nav">
+            <li>
+                <a href="https://github.com/pluff" rel="me" target="_blank">
+                    <i class="icon-2x icon-github"></i>
+                </a>
+            </li>
+            <li>
+                <a href="http://www.linkedin.com/in/shutsin" rel="me" target="_blank">
+                    <i class="icon-2x icon-linkedin"></i>
+                </a>
+            </li>
+            <li>
+                <a href="http://www.facebook.com/pavel.shutin" rel="me" target="_blank">
+                    <i class="icon-2x icon-facebook"></i>
+                </a>
+            </li>
+            <li>
+                <a href="https://plus.google.com/105872229152743598110?rel=author" rel="me" target="_blank">
+                    <i class="icon-2x icon-google-plus-sign"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+</nav>
+<div class="container">
+    <div class="row">
+        <div class="span9"><div itemscope itemtype="http://schema.org/Article">
+    
+<div>
+    <p class="meta">
+        
+        <a class="pull-left" href="/2014/03/04/decorate-your-models-in-two-ways/"
+           title="Previous Post: Decorate your models in two ways"><i class="icon-arrow-left"></i>
+            Decorate your models in two ways</a>
+        
+        
+    </p>
+    <div class="clearfix"></div>
+</div>
+
+
+    
+
+<div class="article">
+    <div class="header">
+        <div class="date pull-right" itemprop="datePublished" content="2014-03-20">Mar 20<span>th</span>, 2014</div>
+        <h3 itemprop="name"><a href="/2014/03/20/angularjs-and-identity-map/" rel="bookmark">AngularJS and Identity Map</a></h3>
+
+        <div class="clearfix"></div>
+    </div>
+    <div class="body user-markup"><h4>Praise AngularJS</h4>
+
+<p>AngularJS is marvelous! It&rsquo;s very neat framework for developing frontend applications.
+Great module structure allows AngularJS community enrich and supplement Angular environment with new libraries.
+Angular became kind of trendy in modern web development i.e. has bright future.
+Last, but not least, big names stand behind Angular.</p>
+
+<h4>Journey has just begun</h4>
+
+<p>With all these advantages AngularJS environment is still far behind in comparision with Ruby as an example.
+So you have to implement some libraries on your own (omg! that&rsquo;s not fair!) before you can write you old good CRUD.
+Identity map is one of them.</p>
+
+<h4>Identity map. What&rsquo;s the problem?</h4>
+
+<p>I&rsquo;ll start with an example. Lets say we have an API that returns users and universities.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="c1">// GET /api/users/1</span>
+</span><span class='line'><span class="p">{</span><span class="nx">id</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Bob&#39;</span><span class="p">,</span> <span class="nx">attented_universities</span><span class="o">:</span> <span class="p">[{</span><span class="nx">id</span><span class="o">:</span> <span class="mi">3</span><span class="p">,</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Oxford&#39;</span><span class="p">}]}</span>
+</span><span class='line'><span class="c1">// GET /api/universities</span>
+</span><span class='line'><span class="p">[{</span><span class="nx">id</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;MIT&#39;</span><span class="p">},</span> <span class="p">{</span><span class="nx">id</span><span class="o">:</span> <span class="mi">2</span><span class="p">,</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Stanford&#39;</span><span class="p">},</span> <span class="p">{</span><span class="nx">id</span><span class="o">:</span> <span class="mi">3</span><span class="p">,</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Oxford&#39;</span><span class="p">}]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Whenever you call for these API with <code>$http</code>, <code>$resource</code> or <code>Restangular</code> you will receive brand new object every time.
+This behavior causes several problems:</p>
+
+<ol>
+<li>You get plenty of objects for one single model entity.</li>
+<li>All these objects will not be treated as equal by built in javascript comparision.</li>
+<li>Multiple objects for one model entity can cause data inconsistency.</li>
+</ol>
+
+
+<!-- more -->
+
+
+<p>In real rich applications the problems become dramatically bigger and can overwhelm you really quickly.
+Imagine there are 10 call on the page and each returns its own instance object of the same university.</p>
+
+<h4>Identity map. How we can fix it?</h4>
+
+<p>Whenever we receive an object from API call we can store it in a separate map object called &ldquo;identity map&rdquo;.
+Then whenever we receive an object again we can merge fresh object with old one, discard fresh object and keep using old one.
+This &ldquo;identity map&rdquo; object will give guarantee that only one instance of same object exists in the app and all pointers reference to the same object stored in &ldquo;identity map&rdquo;.</p>
+
+<p>In order to map objects correctly we need good way to identify them. Every object must have an universal id which is guaranteed to be unique.
+Often a pair of model id and model class name is used for this <code>uid</code>. Using this <code>uid</code> our identity map can store and retrieve objects.
+Possible AngularJS implementation could look like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">module</span> <span class="o">=</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;identity-map&#39;</span><span class="p">,</span> <span class="p">[]);</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">module</span><span class="p">.</span><span class="nx">service</span><span class="p">(</span><span class="s1">&#39;identityMap&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">map</span> <span class="o">=</span> <span class="p">{};</span> <span class="c1">// This is our map object. we will store all objects here.</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">return</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">map</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">obj</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="nx">angular</span><span class="p">.</span><span class="nx">isObject</span><span class="p">(</span><span class="nx">obj</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">isDefined</span><span class="p">(</span><span class="nx">obj</span><span class="p">.</span><span class="nx">uid</span><span class="p">))</span> <span class="p">{</span> <span class="c1">//if object has an uid</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">mappedObject</span> <span class="o">=</span> <span class="nx">map</span><span class="p">[</span><span class="nx">obj</span><span class="p">.</span><span class="nx">uid</span><span class="p">];</span> <span class="c1">// search for already loaded object with the same uid</span>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="nx">mappedObject</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// if &quot;old&quot; object found</span>
+</span><span class='line'>          <span class="nx">angular</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="nx">mappedObject</span><span class="p">,</span> <span class="nx">obj</span><span class="p">)</span> <span class="c1">// merge old object with new one</span>
+</span><span class='line'>        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span> <span class="c1">// if &quot;old&quot; object wasn&#39;t found</span>
+</span><span class='line'>          <span class="nx">map</span><span class="p">[</span><span class="nx">obj</span><span class="p">.</span><span class="nx">uid</span><span class="p">]</span> <span class="o">=</span> <span class="nx">obj</span><span class="p">;</span> <span class="c1">// save our &quot;new&quot; object to the map</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="k">return</span> <span class="nx">map</span><span class="p">[</span><span class="nx">obj</span><span class="p">.</span><span class="nx">uid</span><span class="p">]</span> <span class="c1">//return object from the map.</span>
+</span><span class='line'>      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span> <span class="c1">//if object doesnt have an id just ignore it.</span>
+</span><span class='line'>        <span class="k">return</span> <span class="nx">obj</span><span class="p">;</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>  <span class="p">};</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>and somewhere in a service, o controller:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="p">....</span>
+</span><span class='line'><span class="nx">obj</span> <span class="o">=</span> <span class="nx">identityMap</span><span class="p">.</span><span class="nx">map</span><span class="p">({</span><span class="nx">uid</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Alice&#39;</span><span class="p">});</span>
+</span><span class='line'><span class="nx">obj2</span> <span class="o">=</span> <span class="nx">identityMap</span><span class="p">.</span><span class="nx">map</span><span class="p">({</span><span class="nx">uid</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Bob&#39;</span><span class="p">});</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">obj</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span> <span class="c1">// Bob</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">obj2</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span> <span class="c1">// Bob</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">obj</span> <span class="o">===</span> <span class="nx">obj2</span><span class="p">);</span> <span class="c1">// true. both variables references to the same object.</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now our life of AngularJS developer became much easier because we don&rsquo;t have to track consistency between objects and we have less objects stored through application lifecycle.</p>
+
+<p>The example above shows only basic functionality. You can check <a href="https://github.com/pluff/angular-identity-map">angular-identity-map</a> module for more feature-rich implementation. Contribution is appreciated too.
+&ldquo;angular-identity-map&rdquo; supports embedded objects, collection of objects and integration with Restangular.</p>
+
+<h4>Identity map. Advanced</h4>
+
+<p>Today we&rsquo;ve covered easy half of identity map. Caching is another feature identity map is used for.
+The idea is to return an object from a map even before Angular (via Restangular, $http or $resource) sends a request to API.
+There are many nuances in this idea, so we&rsquo;ll cover it in another post some day.</p>
+
+<h4>Identity map. Backside</h4>
+
+<p>When I said identity map pattern reduces quantity of objects created via API calls I didn&rsquo;t lied. Another truth is that identity map reduces quantity of objects destroyed.
+Every object you store in a map will not be destroyed even if its not used anywhere else in the app. So potentially your AngularJS can store all API response objects in a map.
+You need to keep that in mind while using identity map with AngularJS as well as writing regular AngularJS services. For those who didn&rsquo;t know &ndash; AngularJS services are singletones so they persist throught entire AngularJS app lifecycle.</p>
+
+<p>That&rsquo;s it for now and I&rsquo;ll see you next time!</p>
+</div>
+    <div class="footer">
+        <div class="tags pull-left">
+            
+                <span class="label">
+                    <a href="/tags/#javascript" rel="tag">javascript</a>
+                </span>
+            
+                <span class="label">
+                    <a href="/tags/#angularJS" rel="tag">angularJS</a>
+                </span>
+            
+                <span class="label">
+                    <a href="/tags/#identity map" rel="tag">identity map</a>
+                </span>
+            
+                <span class="label">
+                    <a href="/tags/#restangular" rel="tag">restangular</a>
+                </span>
+            
+        </div>
+        <div class="pull-right">
+            
+            <div class="sharing">
+  <small>Share:</small>
+  <a href="http://twitter.com/intent/tweet?text=AngularJS%20and%20Identity%20map+http%3A%2F%2Fshutsin.com%2F2014%2F03%2F20%2Fangularjs-and-identity-map%2F" title="Share in Twitter" target="_blank"><i class="icon-twitter"></i></a>
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fshutsin.com%2F2014%2F03%2F20%2Fangularjs-and-identity-map%2F" title="Share in Facebook" target="_blank"><i class="icon-facebook"></i></a>
+  <a href="https://plus.google.com/share?url=http%3A%2F%2Fshutsin.com%2F2014%2F03%2F20%2Fangularjs-and-identity-map%2F" title="Share in Google+" target="_blank"><i class="icon-google-plus-sign"></i></a>
+  
+  
+  
+</div>
+
+            
+        </div>
+        <div class="clearfix"></div>
+
+    </div>
+
+</div>
+<div class="clearfix"></div>
+
+
+    
+<div>
+    <p class="meta">
+        
+        <a class="pull-left" href="/2014/03/04/decorate-your-models-in-two-ways/"
+           title="Previous Post: Decorate your models in two ways"><i class="icon-arrow-left"></i>
+            Decorate your models in two ways</a>
+        
+        
+    </p>
+    <div class="clearfix"></div>
+</div>
+
+
+    <div class="content-block-separator"></div>
+    
+    <div class="article-comments">
+        <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+        </div>
+    </div>
+    
+</div>
+</div>
+        <div class="span3 hidden-phone"><div class="info-block" >
+    <div class="about">
+        <div class="header">
+            <h4>About me</h4>
+        </div>
+        <div class="body">
+            <img src="http://www.gravatar.com/avatar/b7a9682d4568c1313664f46432459f0c.png?size=128">
+            <div class="clearfix"></div>
+            <p>
+                My name is Pavel Shutsin and I'm
+                <a href="http://www.ruby-lang.org/">Ruby</a>
+                addicted from Belarus. You can check out more info in my social accounts listed above.
+            </p>
+        </div>
+    </div>
+    <div class="recent">
+        <h4>Recent Posts</h4>
+        <ul>
+            
+            <li><a href="/2014/03/20/angularjs-and-identity-map/">AngularJS and Identity map</a></li>
+            
+            <li><a href="/2014/03/04/decorate-your-models-in-two-ways/">Decorate your models in two ways</a></li>
+            
+            <li><a href="/2013/10/18/rails-and-background-jobs/">Rails and background jobs</a></li>
+            
+            <li><a href="/2013/09/08/another-git-branching-model/">Another git branching model</a></li>
+            
+        </ul>
+    </div>
+    <div class="tags">
+        <h4>Tags Cloud</h4>
+        <a style='font-size: 10px' href='/tags/#Resque'>Resque</a>
+<a style='font-size: 10px' href='/tags/#angularJS'>angularJS</a>
+<a style='font-size: 10px' href='/tags/#background jobs'>background jobs</a>
+<a style='font-size: 10px' href='/tags/#decorator'>decorator</a>
+<a style='font-size: 10px' href='/tags/#development workflow'>development workflow</a>
+<a style='font-size: 10px' href='/tags/#git'>git</a>
+<a style='font-size: 10px' href='/tags/#github'>github</a>
+<a style='font-size: 10px' href='/tags/#identity map'>identity map</a>
+<a style='font-size: 10px' href='/tags/#javascript'>javascript</a>
+<a style='font-size: 10px' href='/tags/#mvc'>mvc</a>
+<a style='font-size: 10px' href='/tags/#rails'>rails</a>
+<a style='font-size: 10px' href='/tags/#restangular'>restangular</a>
+<a style='font-size: 20px' href='/tags/#ruby'>ruby</a>
+
+    </div>
+    <div>
+        <h4>Archives</h4>
+        <ul>
+            
+                
+                
+                    
+                    <li><a href="/archives#March2014">March 2014</a></li>
+                
+                
+            
+                
+                
+                
+            
+                
+                
+                    
+                    <li><a href="/archives#October2013">October 2013</a></li>
+                
+                
+            
+                
+                
+                    
+                    <li><a href="/archives#September2013">September 2013</a></li>
+                
+                
+            
+        </ul>
+
+    </div>
+</div>
+</div>
+    </div>
+</div>
+<footer role="contentinfo"><div class="page-footer">
+    <div class="text-center">
+        <small>&copy; 2014 Pavel Shutsin</small>
+    </div>
+</div>
+</footer>
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'pluff';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://shutsin.com/2014/03/20/angularjs-and-identity-map/';
+        var disqus_url = 'http://shutsin.com/2014/03/20/angularjs-and-identity-map/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -4,7 +4,7 @@
   <title><![CDATA[Addicted to Ruby, In love the Web]]></title>
   <link href="http://shutsin.com/atom.xml" rel="self"/>
   <link href="http://shutsin.com/"/>
-  <updated>2014-03-20T20:46:57+03:00</updated>
+  <updated>2014-03-21T00:13:03+03:00</updated>
   <id>http://shutsin.com/</id>
   <author>
     <name><![CDATA[Pavel Shutsin]]></name>
@@ -12,6 +12,148 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[AngularJS and Identity map]]></title>
+    <link href="http://shutsin.com/2014/03/20/angularjs-and-identity-map/"/>
+    <updated>2014-03-20T22:52:00+03:00</updated>
+    <id>http://shutsin.com/2014/03/20/angularjs-and-identity-map</id>
+    <content type="html"><![CDATA[<h4>Praise AngularJS</h4>
+
+<p>AngularJS is marvelous! It&rsquo;s very neat framework for developing frontend applications.
+Great module structure allows AngularJS community enrich and supplement Angular environment with new libraries.
+Angular became kind of trendy in modern web development i.e. has bright future.
+Last, but not least, big names stand behind Angular.</p>
+
+<h4>Journey has just begun</h4>
+
+<p>With all these advantages AngularJS environment is still far behind in comparision with Ruby as an example.
+So you have to implement some libraries on your own (omg! that&rsquo;s not fair!) before you can write you old good CRUD.
+Identity map is one of them.</p>
+
+<h4>Identity map. What&rsquo;s the problem?</h4>
+
+<p>I&rsquo;ll start with an example. Lets say we have an API that returns users and universities.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="c1">// GET /api/users/1</span>
+</span><span class='line'><span class="p">{</span><span class="nx">id</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Bob&#39;</span><span class="p">,</span> <span class="nx">attented_universities</span><span class="o">:</span> <span class="p">[{</span><span class="nx">id</span><span class="o">:</span> <span class="mi">3</span><span class="p">,</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Oxford&#39;</span><span class="p">}]}</span>
+</span><span class='line'><span class="c1">// GET /api/universities</span>
+</span><span class='line'><span class="p">[{</span><span class="nx">id</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;MIT&#39;</span><span class="p">},</span> <span class="p">{</span><span class="nx">id</span><span class="o">:</span> <span class="mi">2</span><span class="p">,</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Stanford&#39;</span><span class="p">},</span> <span class="p">{</span><span class="nx">id</span><span class="o">:</span> <span class="mi">3</span><span class="p">,</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Oxford&#39;</span><span class="p">}]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Whenever you call for these API with <code>$http</code>, <code>$resource</code> or <code>Restangular</code> you will receive brand new object every time.
+This behavior causes several problems:</p>
+
+<ol>
+<li>You get plenty of objects for one single model entity.</li>
+<li>All these objects will not be treated as equal by built in javascript comparision.</li>
+<li>Multiple objects for one model entity can cause data inconsistency.</li>
+</ol>
+
+
+<!-- more -->
+
+
+<p>In real rich applications the problems become dramatically bigger and can overwhelm you really quickly.
+Imagine there are 10 call on the page and each returns its own instance object of the same university.</p>
+
+<h4>Identity map. How we can fix it?</h4>
+
+<p>Whenever we receive an object from API call we can store it in a separate map object called &ldquo;identity map&rdquo;.
+Then whenever we receive an object again we can merge fresh object with old one, discard fresh object and keep using old one.
+This &ldquo;identity map&rdquo; object will give guarantee that only one instance of same object exists in the app and all pointers reference to the same object stored in &ldquo;identity map&rdquo;.</p>
+
+<p>In order to map objects correctly we need good way to identify them. Every object must have an universal id which is guaranteed to be unique.
+Often a pair of model id and model class name is used for this <code>uid</code>. Using this <code>uid</code> our identity map can store and retrieve objects.
+Possible AngularJS implementation could look like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">module</span> <span class="o">=</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;identity-map&#39;</span><span class="p">,</span> <span class="p">[]);</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">module</span><span class="p">.</span><span class="nx">service</span><span class="p">(</span><span class="s1">&#39;identityMap&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">map</span> <span class="o">=</span> <span class="p">{};</span> <span class="c1">// This is our map object. we will store all objects here.</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">return</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">map</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">obj</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="nx">angular</span><span class="p">.</span><span class="nx">isObject</span><span class="p">(</span><span class="nx">obj</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">isDefined</span><span class="p">(</span><span class="nx">obj</span><span class="p">.</span><span class="nx">uid</span><span class="p">))</span> <span class="p">{</span> <span class="c1">//if object has an uid</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">mappedObject</span> <span class="o">=</span> <span class="nx">map</span><span class="p">[</span><span class="nx">obj</span><span class="p">.</span><span class="nx">uid</span><span class="p">];</span> <span class="c1">// search for already loaded object with the same uid</span>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="nx">mappedObject</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// if &quot;old&quot; object found</span>
+</span><span class='line'>          <span class="nx">angular</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="nx">mappedObject</span><span class="p">,</span> <span class="nx">obj</span><span class="p">)</span> <span class="c1">// merge old object with new one</span>
+</span><span class='line'>        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span> <span class="c1">// if &quot;old&quot; object wasn&#39;t found</span>
+</span><span class='line'>          <span class="nx">map</span><span class="p">[</span><span class="nx">obj</span><span class="p">.</span><span class="nx">uid</span><span class="p">]</span> <span class="o">=</span> <span class="nx">obj</span><span class="p">;</span> <span class="c1">// save our &quot;new&quot; object to the map</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="k">return</span> <span class="nx">map</span><span class="p">[</span><span class="nx">obj</span><span class="p">.</span><span class="nx">uid</span><span class="p">]</span> <span class="c1">//return object from the map.</span>
+</span><span class='line'>      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span> <span class="c1">//if object doesnt have an id just ignore it.</span>
+</span><span class='line'>        <span class="k">return</span> <span class="nx">obj</span><span class="p">;</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>  <span class="p">};</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>and somewhere in a service, o controller:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="p">....</span>
+</span><span class='line'><span class="nx">obj</span> <span class="o">=</span> <span class="nx">identityMap</span><span class="p">.</span><span class="nx">map</span><span class="p">({</span><span class="nx">uid</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Alice&#39;</span><span class="p">});</span>
+</span><span class='line'><span class="nx">obj2</span> <span class="o">=</span> <span class="nx">identityMap</span><span class="p">.</span><span class="nx">map</span><span class="p">({</span><span class="nx">uid</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Bob&#39;</span><span class="p">});</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">obj</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span> <span class="c1">// Bob</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">obj2</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span> <span class="c1">// Bob</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">obj</span> <span class="o">===</span> <span class="nx">obj2</span><span class="p">);</span> <span class="c1">// true. both variables references to the same object.</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now our life of AngularJS developer became much easier because we don&rsquo;t have to track consistency between objects and we have less objects stored through application lifecycle.</p>
+
+<p>The example above shows only basic functionality. You can check <a href="https://github.com/pluff/angular-identity-map">angular-identity-map</a> module for more feature-rich implementation. Contribution is appreciated too.
+&ldquo;angular-identity-map&rdquo; supports embedded objects, collection of objects and integration with Restangular.</p>
+
+<h4>Identity map. Advanced</h4>
+
+<p>Today we&rsquo;ve covered easy half of identity map. Caching is another feature identity map is used for.
+The idea is to return an object from a map even before Angular (via Restangular, $http or $resource) sends a request to API.
+There are many nuances in this idea, so we&rsquo;ll cover it in another post some day.</p>
+
+<h4>Identity map. Backside</h4>
+
+<p>When I said identity map pattern reduces quantity of objects created via API calls I didn&rsquo;t lied. Another truth is that identity map reduces quantity of objects destroyed.
+Every object you store in a map will not be destroyed even if its not used anywhere else in the app. So potentially your AngularJS can store all API response objects in a map.
+You need to keep that in mind while using identity map with AngularJS as well as writing regular AngularJS services. For those who didn&rsquo;t know &ndash; AngularJS services are singletones so they persist throught entire AngularJS app lifecycle.</p>
+
+<p>That&rsquo;s it for now and I&rsquo;ll see you next time!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Decorate your models in two ways]]></title>
