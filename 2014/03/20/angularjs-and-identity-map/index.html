@@ -5,7 +5,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>AngularJS and Identity map - Addicted to Ruby, In love the Web</title>
+  <title>AngularJS and Identity map - Addicted to Ruby, In love with the Web</title>
   <meta name="author" content="Pavel Shutsin">
 
   
@@ -19,11 +19,11 @@
 
   
   <link href="//netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css" rel="stylesheet" type="text/css" media="all">
-  <link rel="index" href="http://shutsin.com" title="Addicted to Ruby, In love the Web">
+  <link rel="index" href="http://shutsin.com" title="Addicted to Ruby, In love with the Web">
   <link rel="canonical"href="http://shutsin.com/2014/03/20/angularjs-and-identity-map">
   <link href="/favicon.ico" rel="icon" type="image/png">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <link href="/atom.xml" rel="alternate" title="Addicted to Ruby, In love the Web" type="application/atom+xml">
+  <link href="/atom.xml" rel="alternate" title="Addicted to Ruby, In love with the Web" type="application/atom+xml">
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script src="/javascripts/libs/bootstrap.min.js"></script>
   <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
@@ -117,8 +117,9 @@ Last, but not least, big names stand behind Angular.</p>
 <h4>Journey has just begun</h4>
 
 <p>With all these advantages AngularJS environment is still far behind in comparision with Ruby as an example.
-So you have to implement some libraries on your own (omg! that&rsquo;s not fair!) before you can write you old good CRUD.
-Identity map is one of them.</p>
+So you have to implement some libraries on your own (omg! that&rsquo;s not fair!) before you can write you old good CRUD.</p>
+
+<p>Identity map is one of them.</p>
 
 <h4>Identity map. What&rsquo;s the problem?</h4>
 
@@ -153,13 +154,16 @@ Imagine there are 10 call on the page and each returns its own instance object o
 
 <h4>Identity map. How we can fix it?</h4>
 
-<p>Whenever we receive an object from API call we can store it in a separate map object called &ldquo;identity map&rdquo;.
-Then whenever we receive an object again we can merge fresh object with old one, discard fresh object and keep using old one.
-This &ldquo;identity map&rdquo; object will give guarantee that only one instance of same object exists in the app and all pointers reference to the same object stored in &ldquo;identity map&rdquo;.</p>
+<p>Whenever we receive an object from API call we can store it in a separate map object called &ldquo;identity map&rdquo;.</p>
+
+<p>Then whenever we receive an object again we can merge fresh object with old one, discard fresh object and keep using old one.</p>
+
+<p>This &ldquo;identity map&rdquo; object will give guarantee that only one instance of same object exists in the app and all pointers reference to the same object stored in &ldquo;identity map&rdquo;.</p>
 
 <p>In order to map objects correctly we need good way to identify them. Every object must have an universal id which is guaranteed to be unique.
-Often a pair of model id and model class name is used for this <code>uid</code>. Using this <code>uid</code> our identity map can store and retrieve objects.
-Possible AngularJS implementation could look like this:</p>
+Often a pair of model id and model class name is used for this <code>uid</code>. Using this <code>uid</code> our identity map can store and retrieve objects.</p>
+
+<p>Possible AngularJS implementation could look like this:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -206,7 +210,7 @@ Possible AngularJS implementation could look like this:</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>and somewhere in a service, o controller:</p>
+<p>and somewhere in a service or controller:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -225,7 +229,7 @@ Possible AngularJS implementation could look like this:</p>
 
 <p>Now our life of AngularJS developer became much easier because we don&rsquo;t have to track consistency between objects and we have less objects stored through application lifecycle.</p>
 
-<p>The example above shows only basic functionality. You can check <a href="https://github.com/pluff/angular-identity-map">angular-identity-map</a> module for more feature-rich implementation. Contribution is appreciated too.
+<p>The example above shows only basic functionality. You can check <a href="https://github.com/pluff/angular-identity-map"><strong>angular-identity-map</strong></a> module for more feature-rich implementation. Contribution is appreciated too.
 &ldquo;angular-identity-map&rdquo; supports embedded objects, collection of objects and integration with Restangular.</p>
 
 <h4>Identity map. Advanced</h4>
@@ -236,9 +240,11 @@ There are many nuances in this idea, so we&rsquo;ll cover it in another post som
 
 <h4>Identity map. Backside</h4>
 
-<p>When I said identity map pattern reduces quantity of objects created via API calls I didn&rsquo;t lied. Another truth is that identity map reduces quantity of objects destroyed.
-Every object you store in a map will not be destroyed even if its not used anywhere else in the app. So potentially your AngularJS can store all API response objects in a map.
-You need to keep that in mind while using identity map with AngularJS as well as writing regular AngularJS services. For those who didn&rsquo;t know &ndash; AngularJS services are singletones so they persist throught entire AngularJS app lifecycle.</p>
+<p>When I said identity map pattern reduces quantity of objects created via API calls I didn&rsquo;t lied.</p>
+
+<p>Another truth is that identity map reduces quantity of objects destroyed. Every object you store in a map will not be destroyed even if its not used anywhere else in the app. So potentially your AngularJS can store all API response objects in a map.</p>
+
+<p>You need to keep that in mind while using identity map with AngularJS as well as writing regular AngularJS services. For those who didn&rsquo;t know &ndash; AngularJS services are singletones so they persist throught entire AngularJS app lifecycle.</p>
 
 <p>That&rsquo;s it for now and I&rsquo;ll see you next time!</p>
 </div>
