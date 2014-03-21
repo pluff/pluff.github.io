@@ -4,7 +4,7 @@
   <title><![CDATA[Addicted to Ruby, In love with the Web]]></title>
   <link href="http://shutsin.com/atom.xml" rel="self"/>
   <link href="http://shutsin.com/"/>
-  <updated>2014-03-21T10:43:26+03:00</updated>
+  <updated>2014-03-21T10:54:09+03:00</updated>
   <id>http://shutsin.com/</id>
   <author>
     <name><![CDATA[Pavel Shutsin]]></name>
@@ -65,7 +65,7 @@ Imagine there are 10 call on the page and each returns its own instance object o
 
 <h4>Identity map. How we can fix it?</h4>
 
-<p>From every object received from API call we can store it in a separate map object called &ldquo;identity map&rdquo;.</p>
+<p>For every object received from API call we can store it in a separate map object called &ldquo;identity map&rdquo;.</p>
 
 <p>Then whenever we receive an object again we can merge fresh object with old one, discard fresh object and keep using old one.</p>
 
